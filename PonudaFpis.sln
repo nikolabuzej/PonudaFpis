@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32210.238
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PonudaFpis", "PonudaFpis\PonudaFpis.csproj", "{C377F81F-E776-41D5-B566-7E6658F7C6E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C377F81F-E776-41D5-B566-7E6658F7C6E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C377F81F-E776-41D5-B566-7E6658F7C6E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C377F81F-E776-41D5-B566-7E6658F7C6E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C377F81F-E776-41D5-B566-7E6658F7C6E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D96790F6-0798-45FE-972E-5A6CB8C499AC}
+	EndGlobalSection
+EndGlobal
