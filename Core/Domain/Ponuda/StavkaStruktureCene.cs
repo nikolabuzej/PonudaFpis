@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Domain.Ponuda
 {
-    internal class StavkaStruktureCene
+    public class StavkaStruktureCene
     {
+        public Guid Id { get; init; } = Guid.NewGuid();
+        public int Kolicina { get; set; }
     }
 }
