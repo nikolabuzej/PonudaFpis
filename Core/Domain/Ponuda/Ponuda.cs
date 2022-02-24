@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Domain.Ponuda
+﻿namespace Core.Domain.Ponuda
 {
     public enum StatusPonude { };
     public class Ponuda
@@ -14,7 +8,11 @@ namespace Core.Domain.Ponuda
         public DateTime DatumPristizanja { get; set; } = DateTime.Now;
         public string ZakonskiZastupnik { get; set; } = string.Empty;
         public StatusPonude Status { get; set; }
-        public IEnumerable<StavkaStruktureCene> StavkeStruktureCene { get; private set; } = new List<StavkaStruktureCene>();
+
+        private readonly List<StavkaStruktureCene> _stavkeStruktureCene = new();
+        public IReadOnlyCollection<StavkaStruktureCene> StavkeStruktureCene => _stavkeStruktureCene;
+
+
 
     }
 }
