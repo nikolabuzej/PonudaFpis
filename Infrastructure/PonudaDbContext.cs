@@ -16,13 +16,13 @@ namespace Infrastructure
 {
     public class PonudaDbContext : DbContext, IUnitOfWork
     {
-        DbSet<Ponuda> Ponude { get; set; }
-        DbSet<JavniPoziv> JavniPozivi { get; set; }
-        DbSet<InformacijeOIsporuci> InformacijeOIsporukama { get; set; }
-        DbSet<Banka> Banke { get; set; }
-        DbSet<StavkaStruktureCene> StavkeStruktureCene { get; set; }
-        DbSet<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; }
-        DbSet<Proizvod> Proizvodi { get; set; }
+        public DbSet<Ponuda> Ponude { get; set; }
+        public DbSet<JavniPoziv> JavniPozivi { get; set; }
+        public DbSet<InformacijeOIsporuci> InformacijeOIsporukama { get; set; }
+        public DbSet<Banka> Banke { get; set; }
+        public DbSet<StavkaStruktureCene> StavkeStruktureCene { get; set; }
+        public DbSet<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; }
+        public DbSet<Proizvod> Proizvodi { get; set; }
 
         public Task SaveChangesAsync()
         {
