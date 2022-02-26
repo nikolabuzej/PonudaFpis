@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Core.Domain.PonudaAggregate.Repositories
+﻿namespace Core.Domain.PonudaAggregate.Repositories
 {
     public interface IPonudaRepository
     {

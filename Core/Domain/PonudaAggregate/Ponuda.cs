@@ -26,6 +26,14 @@ namespace Core.Domain.PonudaAggregate
             Ponudjac = ponudjac;
             InformacijeOIsporuci = informacijeOIsporuci;
         }
+        private Ponuda()
+        {
+
+        }
+        public static Ponuda Default()
+        {
+            return new();
+        }
 
         public Guid Id { get; init; } = Guid.NewGuid();
         public Kontakt Kontakt { get; private set; } = new();

@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32210.238
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PonudaFpis", "PonudaFpis\PonudaFpis.csproj", "{C377F81F-E776-41D5-B566-7E6658F7C6E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PonudaFpis", "PonudaFpis\PonudaFpis.csproj", "{C377F81F-E776-41D5-B566-7E6658F7C6E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "Core\Core.csproj", "{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationLogic", "ApplicationLogic\ApplicationLogic.csproj", "{DE86439B-A8C2-4803-8905-B581D29AC495}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4438E3ED-103F-4459-8E1D-149E6EC4E5A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE86439B-A8C2-4803-8905-B581D29AC495}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE86439B-A8C2-4803-8905-B581D29AC495}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE86439B-A8C2-4803-8905-B581D29AC495}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE86439B-A8C2-4803-8905-B581D29AC495}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
