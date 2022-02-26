@@ -3,14 +3,10 @@ using Core.Domain.BankaAggregate;
 using Core.Domain.InformacijeOIsporuciAggregate;
 using Core.Domain.JavniPozivAggregate;
 using Core.Domain.PonudaAggregate;
+using Core.Domain.PonudjacAggregate;
 using Core.Domain.ProizvodAggregate;
 using Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure
 {
@@ -23,6 +19,7 @@ namespace Infrastructure
         public DbSet<StavkaStruktureCene> StavkeStruktureCene { get; set; }
         public DbSet<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; }
         public DbSet<Proizvod> Proizvodi { get; set; }
+        public DbSet<Ponudjac> Ponudjaci { get; set; }
 
         public PonudaDbContext(DbContextOptions<PonudaDbContext> context):base(context)
         {

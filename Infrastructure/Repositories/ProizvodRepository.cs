@@ -1,21 +1,24 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.ProizvodAggregate;
 using Core.Domain.ProizvodAggregate.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     public class ProizvodRepository : IProizvodRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        private readonly PonudaDbContext _context;
+
+        public ProizvodRepository(PonudaDbContext context)
+        {
+            _context = context;
+        }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public Task<Proizvod> VratiProizvod(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Proizvodi.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

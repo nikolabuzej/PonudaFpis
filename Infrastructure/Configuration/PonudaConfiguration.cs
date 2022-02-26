@@ -1,13 +1,7 @@
-﻿using Core.Domain.JavniPozivAggregate;
-using Core.Domain.PonudaAggregate;
+﻿using Core.Domain.PonudaAggregate;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Configuration
 {

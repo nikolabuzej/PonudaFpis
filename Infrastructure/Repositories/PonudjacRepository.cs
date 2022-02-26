@@ -1,21 +1,24 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.PonudjacAggregate;
 using Core.Domain.PonudjacAggregate.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     public class PonudjacRepository : IPonudjacRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        private readonly PonudaDbContext _context;
+
+        public PonudjacRepository(PonudaDbContext context)
+        {
+            _context = context;
+        }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public Task<Ponudjac> VratiPonudjaca(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Ponudjaci.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

@@ -1,21 +1,24 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.BankaAggregate;
 using Core.Domain.BankaAggregate.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     public class BankaRepository : IBankaRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        private readonly PonudaDbContext _context;
+
+        public BankaRepository(PonudaDbContext context)
+        {
+            _context = context;
+        }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public Task<Banka> VratiBanku(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.Banke.FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

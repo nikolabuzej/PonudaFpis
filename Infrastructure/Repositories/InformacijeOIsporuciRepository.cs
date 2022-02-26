@@ -1,21 +1,24 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.InformacijeOIsporuciAggregate;
 using Core.Domain.InformacijeOIsporuciAggregate.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
 {
     public class InformacijeOIsporuciRepository : IInformacijeOIsporuciRepository
     {
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        private readonly PonudaDbContext _context;
+
+        public InformacijeOIsporuciRepository(PonudaDbContext context)
+        {
+            _context = context;
+        }
+
+        public IUnitOfWork UnitOfWork => _context;
 
         public Task<InformacijeOIsporuci> VratiInformacijeOIsporuci(Guid id)
         {
-            throw new NotImplementedException();
+            return _context.InformacijeOIsporukama.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }
