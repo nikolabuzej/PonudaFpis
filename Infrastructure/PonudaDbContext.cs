@@ -24,6 +24,10 @@ namespace Infrastructure
         public DbSet<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; }
         public DbSet<Proizvod> Proizvodi { get; set; }
 
+        public PonudaDbContext(DbContextOptions<PonudaDbContext> context):base(context)
+        {
+        }
+
         public Task SaveChangesAsync()
         {
             return base.SaveChangesAsync();

@@ -9,7 +9,10 @@ namespace ApplicationLogic.UseCases.KreirajPonudu
         {
             Ponuda = ponuda;
         }
+        public KreirajPonuduOdgovor()
+        {
 
+        }
         public Ponuda Ponuda { get; init; } = Ponuda.Default();
     }
 }

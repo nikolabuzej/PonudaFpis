@@ -1,6 +1,24 @@
+using ApplicationLogic.UseCases.KreirajPonudu;
+using Infrastructure;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<PonudaDbContext>(o =>
+{
+    o.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+});
+
+builder.Services.Scan(s => s.FromAssemblyOf<KreirajPonuduSlucajKoriscenja>()
+.AddClasses()
+.AsImplementedInterfaces()
+.WithTransientLifetime());
+
+builder.Services.Scan(s => s.FromAssemblyOf<PonudaDbContext>()
+.AddClasses()
+.AsImplementedInterfaces()
+.WithTransientLifetime());
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
