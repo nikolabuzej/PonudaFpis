@@ -76,7 +76,7 @@ namespace Core.Domain.PonudaAggregate
                 Proizvod = proizvod
             });
         }
-        public void DodajTekuciRacunPonudjaca(int brojRacuna,Banka banka)
+        public void DodajTekuciRacunPonudjaca(string brojRacuna,Banka banka)
         {
             _tekuciRacuniPonudjaca.Add(new()
             {

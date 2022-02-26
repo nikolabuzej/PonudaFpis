@@ -1,6 +1,8 @@
-﻿namespace Core.Domain.JavniPozivAggregate.Repositories
+﻿using Core.Abrstractions;
+
+namespace Core.Domain.JavniPozivAggregate.Repositories
 {
-    public interface IJavniPozivRepository
+    public interface IJavniPozivRepository: IRepository<JavniPoziv>
     {
         public Task<JavniPoziv> VratiJavniPoziv(Guid id);
     }

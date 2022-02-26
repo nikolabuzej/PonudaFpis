@@ -1,6 +1,8 @@
-﻿namespace Core.Domain.PonudjacAggregate.Repositories
+﻿using Core.Abrstractions;
+
+namespace Core.Domain.PonudjacAggregate.Repositories
 {
-    public interface IPonudjacRepository
+    public interface IPonudjacRepository: IRepository<Ponudjac>
     {
         public Task<Ponudjac> VratiPonudjaca(Guid id);
     }
