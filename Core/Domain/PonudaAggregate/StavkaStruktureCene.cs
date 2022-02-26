@@ -7,6 +7,8 @@ namespace Core.Domain.PonudaAggregate
     {
         public Guid Id { get; init; } = Guid.NewGuid();
 
+        public Guid PonudaId { get; init; }
+
         [Range(1, 100)]
         public int Kolicina { get; set; } = 1;
 
