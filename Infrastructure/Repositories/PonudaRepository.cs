@@ -18,8 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task AzurirajPonudu(Ponuda ponuda)
         {
-             _context.Entry(ponuda).State = EntityState.Modified;
-
+            _context.Update(ponuda);
             return Task.CompletedTask;
         }
 

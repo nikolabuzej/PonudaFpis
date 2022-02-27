@@ -1,10 +1,10 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
 using ApplicationLogic.Dtos.Ponuda;
+using ApplicationLogic.UseCases.AzurirajPonudu;
 using ApplicationLogic.UseCases.IzbrisiPonudu;
 using ApplicationLogic.UseCases.KreirajPonudu;
 using ApplicationLogic.UseCases.VratiPonudu;
 using Core.Domain.PonudaAggregate;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PonudaFpis.Controllers
@@ -18,6 +18,16 @@ namespace PonudaFpis.Controllers
                                           [FromBody] PonudaDto payload)
         {
             KreirajPonuduOdgovor rezultat =await useCase.ExecuteAsync(new() { PonudaDto = payload });
+
+            return rezultat.Ponuda;
+        }
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<Ponuda> AzurirajPonudu([FromRoute] Guid id,
+                                                 [FromBody] PonudaDto ponudaDto,
+                                                 [FromServices] IUseCase<AzurirajPonuduZahtev, AzurirajPonuduOdgovor> useCase)
+        {
+            var rezultat = await useCase.ExecuteAsync(new() { Id = id, PonudaDto = ponudaDto });
 
             return rezultat.Ponuda;
         }

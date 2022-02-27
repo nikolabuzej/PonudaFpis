@@ -1,18 +1,15 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
 using Core.Domain.PonudaAggregate;
 
-namespace ApplicationLogic.UseCases.KreirajPonudu
+namespace ApplicationLogic.UseCases.AzurirajPonudu
 {
-    public class KreirajPonuduOdgovor 
-    { 
-        public KreirajPonuduOdgovor(Ponuda ponuda)
+    public class AzurirajPonuduOdgovor
+    {
+        public AzurirajPonuduOdgovor(Ponuda ponuda)
         {
             Ponuda = ponuda;
         }
-        public KreirajPonuduOdgovor()
-        {
 
-        }
         public Ponuda Ponuda { get; init; } = Ponuda.Default();
     }
 }

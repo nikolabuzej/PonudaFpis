@@ -1,10 +1,11 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
 using ApplicationLogic.Dtos.Ponuda;
 
-namespace ApplicationLogic.UseCases.KreirajPonudu
+namespace ApplicationLogic.UseCases.AzurirajPonudu
 {
-    public class KreirajPonuduZahtev
+    public class AzurirajPonuduZahtev
     {
+        public Guid Id { get; init; }
         public PonudaDto PonudaDto { get; init; } = new();
     }
 }

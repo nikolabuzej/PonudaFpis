@@ -1,6 +1,5 @@
 ﻿using Core.Domain.ProizvodAggregate;
 using Core.Domain.ProizvodAggregate.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PonudaFpis.Controllers
