@@ -12,6 +12,9 @@ namespace Infrastructure.Configuration
             builder.HasKey(x => x.Id);
             builder.OwnsOne(x => x.Kontakt, k => k.WithOwner());
 
+            builder.Property(x => x.Status).HasConversion<string>();
+
+
             IMutableNavigation? stavke = builder.Metadata.FindNavigation(nameof(Ponuda.StavkeStruktureCene));
             stavke.SetPropertyAccessMode(PropertyAccessMode.Field);
 

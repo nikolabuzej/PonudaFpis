@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task<InformacijeOIsporuci> VratiInformacijeOIsporuci(Guid id)
         {
-            return _context.InformacijeOIsporukama.FirstOrDefaultAsync(x => x.Id == id);
+            return _context.InformacijeOIsporuci.FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

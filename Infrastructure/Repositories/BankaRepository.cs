@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task<Banka> VratiBanku(Guid id)
         {
-            return _context.Banke.FirstOrDefaultAsync(b => b.Id == id);
+            return _context.Banka.FirstOrDefaultAsync(b => b.Id == id);
         }
     }
 }

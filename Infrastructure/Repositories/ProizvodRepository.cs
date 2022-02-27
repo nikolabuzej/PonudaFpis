@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task<Proizvod> VratiProizvod(Guid id)
         {
-            return _context.Proizvodi.FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Proizvod.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

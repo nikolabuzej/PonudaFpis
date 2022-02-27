@@ -25,19 +25,27 @@ namespace Infrastructure.Repositories
 
         public Task IzbrisiPonudu(Ponuda ponuda)
         {
-            _context.Ponude.Remove(ponuda);
+            _context.Ponuda.Remove(ponuda);
 
             return Task.CompletedTask;
         }
 
         public async Task KreirajPonudu(Ponuda ponuda)
         {
-            await _context.Ponude.AddAsync(ponuda);
+            await _context.Ponuda.AddAsync(ponuda);
         }
 
         public Task<Ponuda?> VratiPonudu(Guid id)
         {
-            return _context.Ponude.FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Ponuda
+                .Include(p => p.TekuciRacuniPonudjaca)
+                    .ThenInclude(t => t.Banka)
+                .Include(p => p.StavkeStruktureCene)
+                    .ThenInclude(s => s.Proizvod)
+                .Include(p => p.Ponudjac)
+                .Include(p => p.JavniPoziv)
+                .Include(p => p.InformacijeOIsporuci)
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

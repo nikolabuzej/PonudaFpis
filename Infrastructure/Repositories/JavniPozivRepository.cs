@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task<JavniPoziv> VratiJavniPoziv(Guid id)
         {
-            return _context.JavniPozivi.FirstOrDefaultAsync(p => p.Id == id);
+            return _context.JavniPoziv.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

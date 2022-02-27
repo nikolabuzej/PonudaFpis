@@ -12,14 +12,14 @@ namespace Infrastructure
 {
     public class PonudaDbContext : DbContext, IUnitOfWork
     {
-        public DbSet<Ponuda> Ponude { get; set; }
-        public DbSet<JavniPoziv> JavniPozivi { get; set; }
-        public DbSet<InformacijeOIsporuci> InformacijeOIsporukama { get; set; }
-        public DbSet<Banka> Banke { get; set; }
-        public DbSet<StavkaStruktureCene> StavkeStruktureCene { get; set; }
-        public DbSet<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; }
-        public DbSet<Proizvod> Proizvodi { get; set; }
-        public DbSet<Ponudjac> Ponudjaci { get; set; }
+        public DbSet<Ponuda> Ponuda { get; set; }
+        public DbSet<JavniPoziv> JavniPoziv { get; set; }
+        public DbSet<InformacijeOIsporuci> InformacijeOIsporuci { get; set; }
+        public DbSet<Banka> Banka { get; set; }
+        public DbSet<StavkaStruktureCene> StavkaStruktureCene { get; set; }
+        public DbSet<TekuciRacunPonudjaca> TekuciRacunPonudjaca { get; set; }
+        public DbSet<Proizvod> Proizvod { get; set; }
+        public DbSet<Ponudjac> Ponudjac { get; set; }
 
         public PonudaDbContext(DbContextOptions<PonudaDbContext> context):base(context)
         {

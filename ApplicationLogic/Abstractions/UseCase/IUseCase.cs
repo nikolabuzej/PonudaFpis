@@ -1,11 +1,11 @@
 ﻿namespace ApplicationLogic.Abstractions.UseCase
 {
-    public interface IUseCase<IRequest, IResponse> where IRequest : class where IResponse : class
+    public interface IUseCase<TRequest, TResponse> where TRequest: IRequest where TResponse : IResponse
     {
-        public Task<IResponse> ExecuteAsync(IRequest request); 
+        public Task<TResponse> ExecuteAsync(TRequest request); 
     }
-    public interface IUseCase<IRequest> where IRequest : class, new()
+    public interface IUseCase<TRequest> where TRequest : IRequest
     {
-        public Task ExecuteAsync(IRequest request);
+        public Task ExecuteAsync(TRequest request);
     }
 }

@@ -18,7 +18,7 @@ namespace Infrastructure.Repositories
 
         public Task<Ponudjac> VratiPonudjaca(Guid id)
         {
-            return _context.Ponudjaci.FirstOrDefaultAsync(p => p.Id == id);
+            return _context.Ponudjac.FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }
