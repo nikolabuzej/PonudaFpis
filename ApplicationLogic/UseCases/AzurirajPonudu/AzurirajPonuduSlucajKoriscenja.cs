@@ -1,4 +1,5 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
+using ApplicationLogic.Dtos.AzurirajPonudu;
 using ApplicationLogic.Dtos.Ponuda;
 using Core.Domain.BankaAggregate;
 using Core.Domain.BankaAggregate.Repositories;
@@ -57,36 +58,73 @@ namespace ApplicationLogic.UseCases.AzurirajPonudu
                 Telefon = request.PonudaDto.Kontakt.Telefon
             };
 
-             ponuda.Update(kontakt,
-                request.PonudaDto.DatumPristizanja,
-                request.PonudaDto.ZakonskiZastupnik,
-                request.PonudaDto.Status,
-                javniPoziv,
-                ponudjac,
-                informacijeOIsporuci
-                );
+            ponuda.Update(kontakt,
+               request.PonudaDto.DatumPristizanja,
+               request.PonudaDto.ZakonskiZastupnik,
+               request.PonudaDto.Status,
+               javniPoziv,
+               ponudjac,
+               informacijeOIsporuci
+               );
             await DodajStavke(request.PonudaDto.StavkeStruktureCene, ponuda);
             await DodajRacune(request.PonudaDto.TekuciRacuniPonudjaca, ponuda);
 
-            await _ponudaRepository.AzurirajPonudu(ponuda);
-            await _ponudaRepository.UnitOfWork.SaveChangesAsync();
+             await _ponudaRepository.AzurirajPonudu(ponuda);
+            try
+            {
+                await _ponudaRepository.UnitOfWork.SaveChangesAsync();
 
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
             return new(ponuda);
         }
-        private async Task DodajStavke(IEnumerable<StavkaStruktureCeneDto> stavkeDto, Ponuda ponuda)
+        private async Task DodajStavke(IEnumerable<AzurirajStavkuDto> stavkeDto, Ponuda ponuda)
         {
+            foreach (StavkaStruktureCene stara in ponuda.StavkeStruktureCene.ToList())
+            {
+                if (!stavkeDto.Any(s => s.Id == stara.Id))
+                {
+                    ponuda.ObrisiStavkuStruktureCene(stara.Id);
+                }
+            }
             foreach (var stavka in stavkeDto)
             {
                 Proizvod proizvod = await _proizvodRepository.VratiProizvod(stavka.ProizvodId).EnsureExists();
-                ponuda.DodajStavkuStruktureCene(stavka.Kolicina, stavka.JedinicnaCenaBezPdv, stavka.JedinicnaCenaSaPdv, proizvod);
+                if (stavka.Id != Guid.Empty)
+                {
+                    ponuda.AzurirajStavkuStruktureCene(stavka.Id, stavka.Kolicina, stavka.JedinicnaCenaBezPdv, stavka.JedinicnaCenaSaPdv, proizvod);
+                }
+                else
+                {
+                    ponuda.DodajStavkuStruktureCene(stavka.Kolicina, stavka.JedinicnaCenaBezPdv, stavka.JedinicnaCenaSaPdv, proizvod);
+                }
             }
+        
         }
-        private async Task DodajRacune(IEnumerable<TekuciRacunPonudjacaDto> racuniDto, Ponuda ponuda)
+        private async Task DodajRacune(IEnumerable<AzurirajTekuciDto> racuniDto, Ponuda ponuda)
         {
+            foreach (TekuciRacunPonudjaca stari in ponuda.TekuciRacuniPonudjaca.ToList())
+            {
+                if (!racuniDto.Any(r => r.Id == stari.Id))
+                {
+                    ponuda.ObrisiTekuciRacunPonudjaca(stari.Id);
+                }
+            }
             foreach (var racun in racuniDto)
             {
                 Banka banka = await _bankaRepository.VratiBanku(racun.BankaId).EnsureExists();
-                ponuda.DodajTekuciRacunPonudjaca(racun.BrojRacuna, banka);
+                if (racun.Id != Guid.Empty)
+                {
+                    ponuda.AzurirajTekuciRacunPonudjaca(racun.Id, racun.BrojRacuna, banka);
+                }
+                else
+                {
+                    ponuda.DodajTekuciRacunPonudjaca(racun.BrojRacuna, banka);
+                }
             }
         }
     }

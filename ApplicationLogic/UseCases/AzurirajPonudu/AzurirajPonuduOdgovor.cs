@@ -1,5 +1,4 @@
-﻿using ApplicationLogic.Abstractions.UseCase;
-using Core.Domain.PonudaAggregate;
+﻿using Core.Domain.PonudaAggregate;
 
 namespace ApplicationLogic.UseCases.AzurirajPonudu
 {

@@ -1,4 +1,5 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
+using ApplicationLogic.Dtos.AzurirajPonudu;
 using ApplicationLogic.Dtos.Ponuda;
 using ApplicationLogic.UseCases.AzurirajPonudu;
 using ApplicationLogic.UseCases.IzbrisiPonudu;
@@ -24,7 +25,7 @@ namespace PonudaFpis.Controllers
         [HttpPut]
         [Route("{id}")]
         public async Task<Ponuda> AzurirajPonudu([FromRoute] Guid id,
-                                                 [FromBody] PonudaDto ponudaDto,
+                                                 [FromBody] AzurirajPonuduDto ponudaDto,
                                                  [FromServices] IUseCase<AzurirajPonuduZahtev, AzurirajPonuduOdgovor> useCase)
         {
             var rezultat = await useCase.ExecuteAsync(new() { Id = id, PonudaDto = ponudaDto });

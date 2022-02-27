@@ -18,7 +18,8 @@ namespace Infrastructure.Repositories
 
         public Task AzurirajPonudu(Ponuda ponuda)
         {
-            _context.Update(ponuda);
+            _context.Ponuda.Update(ponuda);
+
             return Task.CompletedTask;
         }
 
@@ -34,17 +35,17 @@ namespace Infrastructure.Repositories
             await _context.Ponuda.AddAsync(ponuda);
         }
 
-        public Task<Ponuda?> VratiPonudu(Guid id)
+        public Task<Ponuda> VratiPonudu(Guid id)
         {
             return _context.Ponuda
                 .Include(p => p.TekuciRacuniPonudjaca)
                     .ThenInclude(t => t.Banka)
-                .Include(p => p.StavkeStruktureCene)
+                    .Include(p => p.StavkeStruktureCene)
                     .ThenInclude(s => s.Proizvod)
                 .Include(p => p.Ponudjac)
                 .Include(p => p.JavniPoziv)
                 .Include(p => p.InformacijeOIsporuci)
-                .FirstOrDefaultAsync(p => p.Id == id);
+                .FirstAsync(p => p.Id == id);
         }
     }
 }

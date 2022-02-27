@@ -1,6 +1,4 @@
-﻿using ApplicationLogic.Abstractions.UseCase;
-
-namespace ApplicationLogic.UseCases.IzbrisiPonudu
+﻿namespace ApplicationLogic.UseCases.IzbrisiPonudu
 {
     public class IzbrisiPonuduZahtev
     {

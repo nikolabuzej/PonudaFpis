@@ -1,6 +1,4 @@
-﻿using ApplicationLogic.Abstractions.UseCase;
-
-namespace ApplicationLogic.UseCases.VratiPonudu
+﻿namespace ApplicationLogic.UseCases.VratiPonudu
 {
     public class VratiPonuduZahtev
     {

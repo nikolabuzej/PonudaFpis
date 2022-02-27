@@ -14,12 +14,12 @@ builder.Services.AddDbContext<PonudaDbContext>(o =>
 builder.Services.Scan(s => s.FromAssemblyOf<KreirajPonuduSlucajKoriscenja>()
 .AddClasses()
 .AsImplementedInterfaces()
-.WithTransientLifetime());
+.WithScopedLifetime());
 
 builder.Services.Scan(s => s.FromAssemblyOf<PonudaDbContext>()
 .AddClasses()
 .AsImplementedInterfaces()
-.WithTransientLifetime());
+.WithScopedLifetime());
 
 builder.Services.AddControllers()
                 .AddJsonOptions(j => j.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));

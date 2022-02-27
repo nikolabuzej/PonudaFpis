@@ -1,5 +1,4 @@
-﻿using ApplicationLogic.Abstractions.UseCase;
-using ApplicationLogic.Dtos.Ponuda;
+﻿using ApplicationLogic.Dtos.Ponuda;
 
 namespace ApplicationLogic.UseCases.KreirajPonudu
 {

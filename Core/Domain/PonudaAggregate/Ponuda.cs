@@ -7,7 +7,7 @@ using Core.Extensions;
 
 namespace Core.Domain.PonudaAggregate
 {
-    public enum StatusPonude { URazmatranju, Prihvacena,  Odbijena };
+    public enum StatusPonude { URazmatranju, Prihvacena, Odbijena };
     public class Ponuda
     {
         public Ponuda(Kontakt kontakt,
@@ -49,7 +49,7 @@ namespace Core.Domain.PonudaAggregate
 
         private readonly List<TekuciRacunPonudjaca> _tekuciRacuniPonudjaca = new();
         public IReadOnlyCollection<TekuciRacunPonudjaca> TekuciRacuniPonudjaca => _tekuciRacuniPonudjaca;
-     
+
         public void Update(Kontakt kontakt,
                      DateTime datumPristizanja,
                      string zakonskiZastupnik,
@@ -66,34 +66,52 @@ namespace Core.Domain.PonudaAggregate
             Ponudjac = ponudjac;
             InformacijeOIsporuci = informacijeOIsporuci;
         }
+        public void AzurirajStavkuStruktureCene(Guid id, int kolicina, double jedinicnaCenaBezPdv, double jedinicnaCenaSaPdv, Proizvod proizvod)
+        {
+            StavkaStruktureCene stavka = _stavkeStruktureCene.First(s => s.Id == id).EnsureExists();
+
+            stavka.Kolicina = kolicina;
+            stavka.JedinicnaCenaBezPdv = jedinicnaCenaBezPdv;
+            stavka.JedinicnaCenaSaPdv = jedinicnaCenaSaPdv;
+            stavka.Proizvod = proizvod;
+
+        }
         public void DodajStavkuStruktureCene(int kolicina, double jedinicnaCenaBezPdv, double jedinicnaCenaSaPdv, Proizvod proizvod)
         {
             _stavkeStruktureCene.Add(new()
             {
+                PonudaId = Id,
                 Kolicina = kolicina,
                 JedinicnaCenaBezPdv = jedinicnaCenaBezPdv,
                 JedinicnaCenaSaPdv = jedinicnaCenaSaPdv,
                 Proizvod = proizvod
-            });
+            }) ;
         }
-        public void DodajTekuciRacunPonudjaca(string brojRacuna,Banka banka)
+        public void DodajTekuciRacunPonudjaca(string brojRacuna, Banka banka)
         {
             _tekuciRacuniPonudjaca.Add(new()
             {
+                PonudaId = Id,
                 Banka = banka,
                 BrojRacuna = brojRacuna,
             });
         }
+        public void AzurirajTekuciRacunPonudjaca(Guid id, string brojRacuna, Banka banka)
+        {
+            TekuciRacunPonudjaca tekuci = _tekuciRacuniPonudjaca.First(t => t.Id == id);
+            tekuci.Banka = banka;
+            tekuci.BrojRacuna = brojRacuna;
+        }
         public void ObrisiStavkuStruktureCene(Guid id)
         {
-          var stavka =  _stavkeStruktureCene.FirstOrDefault(x => x.Id == id).EnsureExists();
+            StavkaStruktureCene stavka = _stavkeStruktureCene.First(x => x.Id == id);
 
-          _stavkeStruktureCene.Remove(stavka);
+            _stavkeStruktureCene.Remove(stavka);
         }
 
         public void ObrisiTekuciRacunPonudjaca(Guid id)
         {
-            var racun  = _tekuciRacuniPonudjaca.FirstOrDefault(x => x.Id == id).EnsureExists();
+            TekuciRacunPonudjaca racun = _tekuciRacuniPonudjaca.First(x => x.Id == id);
 
             _tekuciRacuniPonudjaca.Remove(racun);
         }

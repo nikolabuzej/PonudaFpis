@@ -9,6 +9,7 @@ namespace Infrastructure.Configuration
         public void Configure(EntityTypeBuilder<StavkaStruktureCene> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedNever();
             
         }
     }
