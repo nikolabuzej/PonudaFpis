@@ -69,17 +69,9 @@ namespace ApplicationLogic.UseCases.AzurirajPonudu
             await DodajStavke(request.PonudaDto.StavkeStruktureCene, ponuda);
             await DodajRacune(request.PonudaDto.TekuciRacuniPonudjaca, ponuda);
 
-             await _ponudaRepository.AzurirajPonudu(ponuda);
-            try
-            {
-                await _ponudaRepository.UnitOfWork.SaveChangesAsync();
+            await _ponudaRepository.AzurirajPonudu(ponuda);
+            await _ponudaRepository.UnitOfWork.SaveChangesAsync();
 
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
             return new(ponuda);
         }
         private async Task DodajStavke(IEnumerable<AzurirajStavkuDto> stavkeDto, Ponuda ponuda)
@@ -103,7 +95,7 @@ namespace ApplicationLogic.UseCases.AzurirajPonudu
                     ponuda.DodajStavkuStruktureCene(stavka.Kolicina, stavka.JedinicnaCenaBezPdv, stavka.JedinicnaCenaSaPdv, proizvod);
                 }
             }
-        
+
         }
         private async Task DodajRacune(IEnumerable<AzurirajTekuciDto> racuniDto, Ponuda ponuda)
         {
