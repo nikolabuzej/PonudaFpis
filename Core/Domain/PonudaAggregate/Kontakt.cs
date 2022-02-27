@@ -8,7 +8,7 @@ namespace Core.Domain.PonudaAggregate
         public string Prezime { get; init; } = string.Empty;
         [EmailAddress]
         public string Email { get; init; } = string.Empty;
-        [RegularExpression(@"\+3816[0-6][0-9][0-9][0-9][0-9][0-9][0-9]")]
+        [RegularExpression(@"\+3816([0-6]|9)[0-9]{6}")]
         public string Telefon { get; init; } = string.Empty;
         
         [RegularExpression("[0-9]{13}")]

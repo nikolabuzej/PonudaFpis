@@ -1,6 +1,9 @@
 using ApplicationLogic.UseCases.KreirajPonudu;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PonudaFpis.Validation;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +25,7 @@ builder.Services.Scan(s => s.FromAssemblyOf<PonudaDbContext>()
 .WithScopedLifetime());
 
 builder.Services.AddControllers()
+                .AddFluentValidation(f => f.RegisterValidatorsFromAssemblyContaining<KreirajPonuduValidacija>())
                 .AddJsonOptions(j => j.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
