@@ -20,5 +20,10 @@ namespace Infrastructure.Repositories
         {
             return _context.InformacijeOIsporuci.FirstOrDefaultAsync(x => x.Id == id);
         }
+
+        public async Task<IEnumerable<InformacijeOIsporuci>> VratiInformacijeOIsporuci()
+        {
+            return await _context.InformacijeOIsporuci.ToListAsync();
+        }
     }
 }

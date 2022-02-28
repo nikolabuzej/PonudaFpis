@@ -16,6 +16,11 @@ namespace Infrastructure.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
+        public async Task<IEnumerable<Banka>> VratiBanke()
+        {
+            return await _context.Banka.ToListAsync();
+        }
+
         public Task<Banka> VratiBanku(Guid id)
         {
             return _context.Banka.FirstOrDefaultAsync(b => b.Id == id);

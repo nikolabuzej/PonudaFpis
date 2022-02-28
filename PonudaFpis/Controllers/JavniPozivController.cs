@@ -1,6 +1,5 @@
 ﻿using Core.Domain.JavniPozivAggregate;
 using Core.Domain.JavniPozivAggregate.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace PonudaFpis.Controllers

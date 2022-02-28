@@ -5,5 +5,6 @@ namespace Core.Domain.PonudjacAggregate.Repositories
     public interface IPonudjacRepository: IRepository<Ponudjac>
     {
         public Task<Ponudjac> VratiPonudjaca(Guid id);
+        public Task<IEnumerable<Ponudjac>> VratiPonudjace();
     }
 }

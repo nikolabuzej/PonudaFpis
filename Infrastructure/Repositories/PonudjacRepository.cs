@@ -20,5 +20,10 @@ namespace Infrastructure.Repositories
         {
             return _context.Ponudjac.FirstOrDefaultAsync(p => p.Id == id);
         }
+
+        public async Task<IEnumerable<Ponudjac>> VratiPonudjace()
+        {
+            return await _context.Ponudjac.ToListAsync();
+        }
     }
 }
