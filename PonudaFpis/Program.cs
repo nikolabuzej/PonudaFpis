@@ -1,8 +1,8 @@
 using ApplicationLogic.UseCases.KreirajPonudu;
-using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using PonudaFpis.Middleware;
 using PonudaFpis.Validation;
 using System.Text.Json.Serialization;
 
@@ -39,7 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 
 app.MapControllers();

@@ -1,6 +1,7 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.PonudaAggregate;
 using Core.Domain.PonudaAggregate.Repositories;
+using Core.ListView;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -35,6 +36,20 @@ namespace Infrastructure.Repositories
             await _context.Ponuda.AddAsync(ponuda);
         }
 
+        public Task<ListView<Ponuda>> VratiPonude(PaginationParameters parameters)
+        {
+            IQueryable<Ponuda> queryable = _context.Set<Ponuda>()
+                  .Include(p => p.TekuciRacuniPonudjaca)
+                      .ThenInclude(t => t.Banka)
+                      .Include(p => p.StavkeStruktureCene)
+                      .ThenInclude(s => s.Proizvod)
+                  .Include(p => p.Ponudjac)
+                  .Include(p => p.JavniPoziv)
+                  .Include(p => p.InformacijeOIsporuci);
+
+           return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable, parameters.PageNumber,parameters.PageSize));
+        }
+
         public Task<Ponuda> VratiPonudu(Guid id)
         {
             return _context.Ponuda
@@ -45,7 +60,7 @@ namespace Infrastructure.Repositories
                 .Include(p => p.Ponudjac)
                 .Include(p => p.JavniPoziv)
                 .Include(p => p.InformacijeOIsporuci)
-                .FirstAsync(p => p.Id == id);
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
     }
 }

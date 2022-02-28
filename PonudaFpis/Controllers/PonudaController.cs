@@ -4,9 +4,12 @@ using ApplicationLogic.Dtos.Ponuda;
 using ApplicationLogic.UseCases.AzurirajPonudu;
 using ApplicationLogic.UseCases.IzbrisiPonudu;
 using ApplicationLogic.UseCases.KreirajPonudu;
+using ApplicationLogic.UseCases.VratiPonude;
 using ApplicationLogic.UseCases.VratiPonudu;
 using Core.Domain.PonudaAggregate;
+using Core.ListView;
 using Microsoft.AspNetCore.Mvc;
+using PonudaFpis.Model;
 
 namespace PonudaFpis.Controllers
 {
@@ -18,7 +21,7 @@ namespace PonudaFpis.Controllers
         public async Task<Ponuda> KreirajPonudu([FromServices] IUseCase<KreirajPonuduZahtev, KreirajPonuduOdgovor> useCase,
                                           [FromBody] PonudaDto payload)
         {
-            KreirajPonuduOdgovor rezultat =await useCase.ExecuteAsync(new() { PonudaDto = payload });
+            KreirajPonuduOdgovor rezultat = await useCase.ExecuteAsync(new() { PonudaDto = payload });
 
             return rezultat.Ponuda;
         }
@@ -32,6 +35,19 @@ namespace PonudaFpis.Controllers
 
             return rezultat.Ponuda;
         }
+        [HttpGet]
+        public async Task<ListViewModel<Ponuda>> VratiPonude([FromQuery] PaginationParameters paginationParameters,
+            [FromServices] IUseCase<VratiPonudeZahtev, VratiPonudeOdgovor> useCase)
+        {
+            VratiPonudeOdgovor lista = await useCase.ExecuteAsync(new() { Pagination = paginationParameters });
+
+            return new()
+            {
+                Data = lista.Ponude,
+                Pagination = new() { PageNumber = lista.Ponude.CurrentPage, PageSize = lista.Ponude.PageSize }
+            };
+        }
+
         [HttpGet]
         [Route("{id}")]
         public async Task<Ponuda> VratiPonudu([FromRoute] Guid id,

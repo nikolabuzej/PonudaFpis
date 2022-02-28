@@ -1,4 +1,5 @@
 ﻿using Core.Abrstractions;
+using Core.ListView;
 
 namespace Core.Domain.PonudaAggregate.Repositories
 {
@@ -8,5 +9,8 @@ namespace Core.Domain.PonudaAggregate.Repositories
         public Task KreirajPonudu(Ponuda ponuda);
         public Task AzurirajPonudu(Ponuda ponuda);
         public Task IzbrisiPonudu(Ponuda ponuda);
+
+        public Task<ListView<Ponuda>> VratiPonude(PaginationParameters parameters);
+
     } 
 }

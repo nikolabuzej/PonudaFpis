@@ -1,5 +1,4 @@
 ﻿using ApplicationLogic.Dtos.AzurirajPonudu;
-using ApplicationLogic.Dtos.Ponuda;
 
 namespace ApplicationLogic.UseCases.AzurirajPonudu
 {

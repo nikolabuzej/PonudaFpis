@@ -1,6 +1,5 @@
 ﻿using ApplicationLogic.Abstractions.UseCase;
 using ApplicationLogic.Dtos.AzurirajPonudu;
-using ApplicationLogic.Dtos.Ponuda;
 using Core.Domain.BankaAggregate;
 using Core.Domain.BankaAggregate.Repositories;
 using Core.Domain.InformacijeOIsporuciAggregate;
