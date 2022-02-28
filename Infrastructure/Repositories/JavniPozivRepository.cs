@@ -16,6 +16,11 @@ namespace Infrastructure.Repositories
 
         public IUnitOfWork UnitOfWork => _context;
 
+        public async Task<IEnumerable<JavniPoziv>> VratiJavnePozive()
+        {
+           return await _context.JavniPoziv.ToListAsync();
+        }
+
         public Task<JavniPoziv> VratiJavniPoziv(Guid id)
         {
             return _context.JavniPoziv.FirstOrDefaultAsync(p => p.Id == id);

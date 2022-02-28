@@ -44,7 +44,7 @@ namespace PonudaFpis.Controllers
             return new()
             {
                 Data = lista.Ponude,
-                Pagination = new() { PageNumber = lista.Ponude.CurrentPage, PageSize = lista.Ponude.PageSize }
+                Pagination = new(lista.Ponude.CurrentPage, lista.Ponude.TotalPages,lista.Ponude.PageSize,lista.Ponude.Count) 
             };
         }
 
