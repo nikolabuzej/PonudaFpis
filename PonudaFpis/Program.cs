@@ -8,6 +8,17 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "cors",
+                      builder =>
+                      {
+                          builder.AllowAnyHeader();
+                          builder.AllowAnyMethod();
+                          builder.AllowAnyOrigin();
+                      });
+});
+
 // Add services to the container.
 builder.Services.AddDbContext<PonudaDbContext>(o =>
 {
@@ -41,6 +52,7 @@ if (app.Environment.IsDevelopment())
 }
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
+app.UseCors("cors");
 
 app.MapControllers();
 

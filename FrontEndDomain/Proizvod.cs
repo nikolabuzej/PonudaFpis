@@ -1,6 +1,5 @@
-﻿namespace Core.Domain.ProizvodAggregate
+﻿namespace FrontEnd.FrontEndDomain
 {
-
     public class Proizvod
     {
         public Guid Id { get; init; } = Guid.NewGuid();

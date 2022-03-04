@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\Vi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEndDomain", "FrontEndDomain\FrontEndDomain.csproj", "{F29030CF-8190-4150-81BF-E84ABBDF5A32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureFE", "InfrastructureFE\InfrastructureFE.csproj", "{7F22CFFC-D0B7-4AAD-857D-F47E82324693}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{F29030CF-8190-4150-81BF-E84ABBDF5A32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F29030CF-8190-4150-81BF-E84ABBDF5A32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F29030CF-8190-4150-81BF-E84ABBDF5A32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F22CFFC-D0B7-4AAD-857D-F47E82324693}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F22CFFC-D0B7-4AAD-857D-F47E82324693}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F22CFFC-D0B7-4AAD-857D-F47E82324693}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F22CFFC-D0B7-4AAD-857D-F47E82324693}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{37C40197-4267-4E60-AF98-84E76259E1FE} = {BFD8817E-36B4-4A68-B037-0EC36C503CE8}
 		{ABAFB604-E4C5-4995-9C70-E6C30286DEC8} = {BFD8817E-36B4-4A68-B037-0EC36C503CE8}
 		{F29030CF-8190-4150-81BF-E84ABBDF5A32} = {BFD8817E-36B4-4A68-B037-0EC36C503CE8}
+		{7F22CFFC-D0B7-4AAD-857D-F47E82324693} = {BFD8817E-36B4-4A68-B037-0EC36C503CE8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D96790F6-0798-45FE-972E-5A6CB8C499AC}

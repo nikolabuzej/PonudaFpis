@@ -1,7 +1,6 @@
-﻿namespace Core.Domain.ProizvodAggregate
+﻿namespace FrontEnd.FrontEndDomain
 {
-
-    public class Proizvod
+    public class InformacijeOIsporuci
     {
         public Guid Id { get; init; } = Guid.NewGuid();
         public string Ime { get; set; } = string.Empty;
