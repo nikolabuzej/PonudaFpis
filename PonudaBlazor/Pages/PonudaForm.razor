@@ -1,0 +1,19 @@
+﻿@page "/ponuda/{Id:Guid}"
+@using ViewModels
+@inject PonudaFormViewModel PonudaViewModel;
+
+<EditForm Model="@PonudaViewModel.Ponuda">
+    
+</EditForm>
+
+
+@code
+{
+    [Parameter]
+    public Guid Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await PonudaViewModel.OnInit(Id); 
+    }
+}

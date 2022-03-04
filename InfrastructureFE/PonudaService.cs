@@ -1,11 +1,6 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
 using FrontEndDomain.ListViewConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InfrastructureFE
 {
@@ -31,6 +26,12 @@ namespace InfrastructureFE
             return result;
         }
 
+        public async Task<Ponuda> VratiPonudu(Guid id)
+        {
+            HttpResponseMessage response = await _httpClient.GetAsync($"{UrlStrings.PonudaUrl}/{id}");
+            Ponuda ponuda = await HttpUtilities.Deserialize<Ponuda>(response);
 
+            return ponuda;
+        }
     }
 }
