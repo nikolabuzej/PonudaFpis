@@ -1,0 +1,21 @@
+﻿@page "/ponuda"
+@using PonudaBlazor.Components.PonudaComponents
+@using ViewModels
+@inject PonudaViewModel PonudaViewModel;
+
+
+<PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
+<p>@message</p>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await PonudaViewModel.OnInit();
+    }
+    string message = string.Empty;
+    private void OnClick(MouseEventArgs args)
+    {
+        message = "click works";
+    }
+}

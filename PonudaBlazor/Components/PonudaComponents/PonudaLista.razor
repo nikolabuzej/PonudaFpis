@@ -1,0 +1,40 @@
+﻿@using FrontEnd.FrontEndDomain
+
+@if(Ponude == null || Ponude.Count == 0)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table class="table">
+    <thead>
+        <tr>
+            <th>Status</th>
+            <th>Datum pristizanja</th>
+            <th>Zakonski zastupnik</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var ponuda in Ponude)
+        {
+            <tr>
+                <td>@ponuda.Status</td>
+                <td>@ponuda.DatumPristizanja</td>
+                <td>@ponuda.ZakonskiZastupnik</td>
+                <td><button @onclick="OnClickCallBack">click</button></td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+}
+
+@code
+{
+    [Parameter]
+    public List<Ponuda> Ponude { get; set; } = Enumerable.Empty<Ponuda>().ToList();
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClickCallBack { get; set; }
+
+}
