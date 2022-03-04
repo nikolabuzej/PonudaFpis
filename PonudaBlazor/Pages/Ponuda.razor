@@ -1,8 +1,9 @@
 ﻿@page "/ponuda"
+@using InfrastructureFE
 @using PonudaBlazor.Components.PonudaComponents
 @using ViewModels
 @inject PonudaViewModel PonudaViewModel;
-
+@inject NavigationManager NavigationManager;
 
 <PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
 <p>@message</p>
@@ -14,8 +15,8 @@
         await PonudaViewModel.OnInit();
     }
     string message = string.Empty;
-    private void OnClick(MouseEventArgs args)
+    private void OnClick(Guid id)
     {
-        message = "click works";
+        NavigationManager.NavigateTo($"{UrlStrings.PonudaUrl}/{id}");
     }
 }

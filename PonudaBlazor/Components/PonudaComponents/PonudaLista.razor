@@ -21,7 +21,7 @@ else
                 <td>@ponuda.Status</td>
                 <td>@ponuda.DatumPristizanja</td>
                 <td>@ponuda.ZakonskiZastupnik</td>
-                <td><button @onclick="OnClickCallBack">click</button></td>
+                <td><button @onclick="() => PassBack(ponuda.Id)"> click</button></td>
             </tr>
         }
     </tbody>
@@ -35,6 +35,11 @@ else
     public List<Ponuda> Ponude { get; set; } = Enumerable.Empty<Ponuda>().ToList();
 
     [Parameter]
-    public EventCallback<MouseEventArgs> OnClickCallBack { get; set; }
+    public EventCallback<Guid> OnClickCallBack { get; set; }
+
+    private async Task PassBack(Guid id)
+    {
+       await OnClickCallBack.InvokeAsync(id);
+    }
 
 }
