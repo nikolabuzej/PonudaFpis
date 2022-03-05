@@ -3,7 +3,8 @@
 @using ViewModels
 @inject PonudaFormViewModel PonudaViewModel;
 
-<EditForm Model="@PonudaViewModel.Ponuda">
+<fieldset disabled=@isDisabled>
+    <EditForm Model="@PonudaViewModel.Ponuda">
     <DataAnnotationsValidator />
     <ValidationSummary />
     
@@ -45,13 +46,21 @@
 
 
 </EditForm>
-
+</fieldset>
+@if (isDisabled)
+{
+    <button @onclick="@(e=> isDisabled = false)">Edit</button>
+}
+else
+{
+    <button>Submit</button>
+}
 
 @code
 {
     [Parameter]
     public Guid Id { get; set; }
-
+    private bool isDisabled = true;
 
     protected override async Task OnInitializedAsync()
     {
