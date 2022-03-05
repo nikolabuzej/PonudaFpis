@@ -32,14 +32,14 @@ namespace FrontEnd.FrontEndDomain
             return new();
         }
 
-        public Guid Id { get; init; } = Guid.NewGuid();
-        public Kontakt Kontakt { get; private set; } = new();
-        public DateTime DatumPristizanja { get; private set; } = DateTime.Now;
-        public string ZakonskiZastupnik { get; private set; } = string.Empty;
-        public StatusPonude Status { get; private set; }
-        public JavniPoziv JavniPoziv { get; private set; } = new();
-        public Ponudjac Ponudjac { get; private set; } = new();
-        public InformacijeOIsporuci InformacijeOIsporuci { get; private set; } = new();
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public Kontakt Kontakt { get; set; } = new();
+        public DateTime DatumPristizanja { get; set; } = DateTime.Now;
+        public string ZakonskiZastupnik { get;set; } = string.Empty;
+        public StatusPonude Status { get;  set; }
+        public JavniPoziv JavniPoziv { get;  set; } = new();
+        public Ponudjac Ponudjac { get;  set; } = new();
+        public InformacijeOIsporuci InformacijeOIsporuci { get;  set; } = new();
 
         private readonly List<StavkaStruktureCene> _stavkeStruktureCene = new();
         public IReadOnlyCollection<StavkaStruktureCene> StavkeStruktureCene => _stavkeStruktureCene;

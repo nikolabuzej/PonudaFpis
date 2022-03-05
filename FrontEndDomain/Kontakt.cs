@@ -4,14 +4,18 @@ namespace FrontEnd.FrontEndDomain
 {
     public class Kontakt
     {
-        public string Ime { get; init; } = string.Empty;
-        public string Prezime { get; init; } = string.Empty;
+        [Required]
+        public string Ime { get; set; } = string.Empty;
+        [Required]
+        public string Prezime { get; set; } = string.Empty;
         [EmailAddress]
-        public string Email { get; init; } = string.Empty;
+        [Required]
+        public string Email { get; set; } = string.Empty;
         [RegularExpression(@"\+3816([0-6]|9)[0-9]{6}")]
-        public string Telefon { get; init; } = string.Empty;
-        
+        [Required]
+        public string Telefon { get; set; } = string.Empty;
+        [Required]
         [RegularExpression("[0-9]{13}")]
-        public string Jmbg { get; init; } = string.Empty;
+        public string Jmbg { get; set; } = string.Empty;
     }
 }

@@ -17,9 +17,9 @@ namespace InfrastructureFE
         {
             HttpResponseMessage? response = await _httpClient.GetAsync(UrlStrings.JavniPozivUrl);
 
-            ListViewModel<JavniPoziv>? listView = await HttpUtilities.Deserialize<ListViewModel<JavniPoziv>>(response);
+            IEnumerable<JavniPoziv> pozivi = await HttpUtilities.Deserialize<IEnumerable<JavniPoziv>>(response);
 
-            return listView.Data;
+            return pozivi;
         }
     }
 }

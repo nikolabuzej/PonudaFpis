@@ -1,11 +1,6 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
 using FrontEndDomain.ListViewConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InfrastructureFE
 {
@@ -21,10 +16,9 @@ namespace InfrastructureFE
         public async Task<IEnumerable<Ponudjac>> VratiPonudjace()
         {
             HttpResponseMessage? response = await _httpClient.GetAsync(UrlStrings.PonudjacUrl);
+            IEnumerable<Ponudjac> ponudjaci = await HttpUtilities.Deserialize<IEnumerable<Ponudjac>>(response);
 
-            ListViewModel<Ponudjac>? listView = await HttpUtilities.Deserialize<ListViewModel<Ponudjac>>(response);
-
-            return listView.Data;
+            return ponudjaci;
         }
     }
 }

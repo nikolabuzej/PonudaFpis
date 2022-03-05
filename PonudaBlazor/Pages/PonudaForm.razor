@@ -1,9 +1,49 @@
 ﻿@page "/ponuda/{Id:guid}"
+@using FrontEnd.FrontEndDomain
 @using ViewModels
 @inject PonudaFormViewModel PonudaViewModel;
 
 <EditForm Model="@PonudaViewModel.Ponuda">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
     
+    <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
+        @foreach(var javniPoziv in PonudaViewModel.JavniPozivi)
+        {
+            <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
+        }
+    </InputSelect>
+    <InputSelect @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
+        @foreach(var ponudjac in PonudaViewModel.Ponudjaci)
+        {
+            <option value="@ponudjac.Id">@ponudjac.Ime</option>
+        }
+    </InputSelect>
+    <InputSelect @bind-Value="PonudaViewModel.Ponuda.Status">
+        @foreach(var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
+        {
+            <option value="@status">@status.ToString()</option>
+        }
+    </InputSelect>
+    <InputSelect @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
+        @foreach(var ioi in PonudaViewModel.InformacijeOIsporuci)
+        {
+            <option value="@ioi.Id">@ioi.Ime</option>
+        }
+    </InputSelect>
+
+    <InputDate @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
+    
+
+
+    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
+    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
+    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
+    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
+    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+
+
+
 </EditForm>
 
 
@@ -12,8 +52,10 @@
     [Parameter]
     public Guid Id { get; set; }
 
+
     protected override async Task OnInitializedAsync()
     {
-        await PonudaViewModel.OnInit(Id); 
+        await PonudaViewModel.OnInit(Id);
     }
+
 }

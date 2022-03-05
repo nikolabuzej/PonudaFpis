@@ -1,11 +1,6 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
 using FrontEndDomain.ListViewConfiguration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InfrastructureFE
 {
@@ -21,9 +16,9 @@ namespace InfrastructureFE
         public async Task<IEnumerable<Banka>> VratiBanke()
         {
             HttpResponseMessage? response = await _httpClient.GetAsync(UrlStrings.BankaUrl);
-            ListViewModel<Banka>? listView = await HttpUtilities.Deserialize<ListViewModel<Banka>>(response);
+            IEnumerable<Banka> banke = await HttpUtilities.Deserialize<IEnumerable<Banka>>(response);
 
-            return listView.Data;
+            return banke;
         }
     }
 }

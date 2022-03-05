@@ -16,9 +16,10 @@ namespace InfrastructureFE
         public async Task<IEnumerable<InformacijeOIsporuci>> VratiInformacijeOIsporuci()
         {
             HttpResponseMessage? response = await _httpClient.GetAsync(UrlStrings.InformacijeOIsporuciUrl);
-            ListViewModel<InformacijeOIsporuci>? listView = await HttpUtilities.Deserialize<ListViewModel<InformacijeOIsporuci>>(response);
+            IEnumerable<InformacijeOIsporuci> ioi = await HttpUtilities
+                .Deserialize<IEnumerable<InformacijeOIsporuci>>(response);
 
-            return listView.Data;
+            return ioi;
         }
     }
 }
