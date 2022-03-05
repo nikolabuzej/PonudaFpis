@@ -1,10 +1,5 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ViewModels
 {
@@ -12,6 +7,25 @@ namespace ViewModels
     {
         private readonly IPonudaService _ponudaService;
         private Ponuda _ponuda = Ponuda.Default();
+        private  List<JavniPoziv> _javniPozivi = Enumerable.Empty<JavniPoziv>().ToList();
+        private  List<Ponudjac> _ponudjaci = Enumerable.Empty<Ponudjac>().ToList();
+        private  List<InformacijeOIsporuci> _informacijeOIsporuci = Enumerable.Empty<InformacijeOIsporuci>().ToList();
+
+        public List<JavniPoziv> JavniPozivi
+        {
+            get => _javniPozivi;
+            set => SetValue(ref _javniPozivi, value);
+        }
+        public List<Ponudjac> Ponudjaci
+        {
+            get => _ponudjaci;
+            set => SetValue(ref _ponudjaci, value);
+        }
+        public List<InformacijeOIsporuci> InformacijeOIsporuci
+        {
+            get => _informacijeOIsporuci;
+            set => SetValue(ref _informacijeOIsporuci, value);
+        }
         public Ponuda Ponuda
         {
             get => _ponuda;
