@@ -6,7 +6,13 @@
 @inject NavigationManager NavigationManager;
 
 <PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
-<p>@message</p>
+<div class="">
+    <span class="oi oi-media-skip-backward" @onclick="PonudaViewModel.FirstPage"></span>
+    <span class="oi oi-arrow-thick-left" @onclick="PonudaViewModel.PrevoiusPage"></span>
+    <span >@PonudaViewModel.GetPageStatus()</span>
+    <span class="oi oi-arrow-thick-right" @onclick="PonudaViewModel.NextPage"></span>
+    <span class="oi oi-media-skip-forward" @onclick="PonudaViewModel.LastPage"></span>
+</div>
 
 @code
 {
@@ -14,7 +20,6 @@
     {
         await PonudaViewModel.OnInit();
     }
-    string message = string.Empty;
     private void OnClick(Guid id)
     {
         NavigationManager.NavigateTo($"ponuda/{id}");

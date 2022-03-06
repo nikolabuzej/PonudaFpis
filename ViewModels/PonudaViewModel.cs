@@ -25,7 +25,26 @@ namespace ViewModels
 
             Ponude = ponude;
         }
-
+        public async Task NextPage()
+        {
+           Ponude = await this.VratiPonude(Ponude.Pagination.NextPage, Ponude.Pagination.PageSize);
+        }
+        public async Task PrevoiusPage()
+        {
+           Ponude = await this.VratiPonude(Ponude.Pagination.PreviousPage,Ponude.Pagination.PageSize);
+        }
+        public async Task LastPage()
+        {
+            Ponude = await this.VratiPonude(Ponude.Pagination.TotalPages, Ponude.Pagination.PageSize);
+        }
+        public async Task FirstPage()
+        {
+            Ponude = await this.VratiPonude(1, Ponude.Pagination.PageSize);
+        }
+        public string GetPageStatus()
+        {
+            return $"{Ponude.Pagination.CurrentPage}/{Ponude.Pagination.TotalPages}";
+        }
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber, int pageSize)
         {
             ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize);
