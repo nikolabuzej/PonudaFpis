@@ -4,8 +4,8 @@ namespace FrontEnd.FrontEndDomain
 { 
     public class TekuciRacunPonudjaca
     {
-        public Guid Id { get; init; } = Guid.NewGuid();
-        public Guid PonudaId { get; init; }
+        public Guid Id { get; set; }
+        public Guid PonudaId { get; set; }
        
         [StringLength(18)]
         [RegularExpression("[0-9]{18}")]

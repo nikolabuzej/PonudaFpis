@@ -52,6 +52,9 @@ namespace ViewModels
             set => SetValue(ref _ponuda, value);
         }
 
+        public StavkaStruktureCene StavkaStruktureCene { get; set; } = new();
+        public TekuciRacunPonudjaca TekuciRacunPonudjaca { get; set; } = new();
+
         public PonudaPayload PonudaPayload { get; set; } = new();
 
         public PonudaFormViewModel(IPonudaService ponudaService,

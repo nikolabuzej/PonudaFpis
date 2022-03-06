@@ -15,13 +15,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataMigrations", "DataMigra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FrontEnd", "FrontEnd", "{BFD8817E-36B4-4A68-B037-0EC36C503CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PonudaBlazor", "PonudaBlazor\PonudaBlazor.csproj", "{37C40197-4267-4E60-AF98-84E76259E1FE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PonudaBlazor", "PonudaBlazor\PonudaBlazor.csproj", "{37C40197-4267-4E60-AF98-84E76259E1FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModels", "ViewModels\ViewModels.csproj", "{ABAFB604-E4C5-4995-9C70-E6C30286DEC8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModels", "ViewModels\ViewModels.csproj", "{ABAFB604-E4C5-4995-9C70-E6C30286DEC8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrontEndDomain", "FrontEndDomain\FrontEndDomain.csproj", "{F29030CF-8190-4150-81BF-E84ABBDF5A32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FrontEndDomain", "FrontEndDomain\FrontEndDomain.csproj", "{F29030CF-8190-4150-81BF-E84ABBDF5A32}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfrastructureFE", "InfrastructureFE\InfrastructureFE.csproj", "{7F22CFFC-D0B7-4AAD-857D-F47E82324693}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InfrastructureFE", "InfrastructureFE\InfrastructureFE.csproj", "{7F22CFFC-D0B7-4AAD-857D-F47E82324693}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

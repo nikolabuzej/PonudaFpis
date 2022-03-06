@@ -4,9 +4,9 @@ namespace FrontEnd.FrontEndDomain
 {
     public class StavkaStruktureCene
     {
-        public Guid Id { get; init; } = Guid.NewGuid();
+        public Guid Id { get; set; }
 
-        public Guid PonudaId { get; init; }
+        public Guid PonudaId { get; set; }
 
         [Range(1, 100)]
         public int Kolicina { get; set; } = 1;

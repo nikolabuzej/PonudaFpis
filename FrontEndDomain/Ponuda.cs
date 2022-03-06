@@ -1,6 +1,7 @@
 ﻿
 
 using FrontEndDomain.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrontEnd.FrontEndDomain
 {
@@ -32,20 +33,20 @@ namespace FrontEnd.FrontEndDomain
             return new();
         }
 
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; }
         public Kontakt Kontakt { get; set; } = new();
+        [Required]
         public DateTime DatumPristizanja { get; set; } = DateTime.Now;
+        [Required]
         public string ZakonskiZastupnik { get;set; } = string.Empty;
+        [Required]
         public StatusPonude Status { get;  set; }
         public JavniPoziv JavniPoziv { get;  set; } = new();
         public Ponudjac Ponudjac { get;  set; } = new();
         public InformacijeOIsporuci InformacijeOIsporuci { get;  set; } = new();
 
-        private readonly List<StavkaStruktureCene> _stavkeStruktureCene = new();
-        public IReadOnlyCollection<StavkaStruktureCene> StavkeStruktureCene => _stavkeStruktureCene;
-
-        private readonly List<TekuciRacunPonudjaca> _tekuciRacuniPonudjaca = new();
-        public IReadOnlyCollection<TekuciRacunPonudjaca> TekuciRacuniPonudjaca => _tekuciRacuniPonudjaca;
+        public List<StavkaStruktureCene> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCene>().ToList();
+        public List<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; } = Enumerable.Empty<TekuciRacunPonudjaca>().ToList();
 
         public void Update(Kontakt kontakt,
                      DateTime datumPristizanja,
@@ -65,7 +66,7 @@ namespace FrontEnd.FrontEndDomain
         }
         public void AzurirajStavkuStruktureCene(Guid id, int kolicina, double jedinicnaCenaBezPdv, double jedinicnaCenaSaPdv, Proizvod proizvod)
         {
-            StavkaStruktureCene stavka = _stavkeStruktureCene.First(s => s.Id == id).EnsureExists();
+            StavkaStruktureCene stavka = StavkeStruktureCene.First(s => s.Id == id).EnsureExists();
 
             stavka.Kolicina = kolicina;
             stavka.JedinicnaCenaBezPdv = jedinicnaCenaBezPdv;
@@ -75,7 +76,7 @@ namespace FrontEnd.FrontEndDomain
         }
         public void DodajStavkuStruktureCene(int kolicina, double jedinicnaCenaBezPdv, double jedinicnaCenaSaPdv, Proizvod proizvod)
         {
-            _stavkeStruktureCene.Add(new()
+            StavkeStruktureCene.Add(new()
             {
                 PonudaId = Id,
                 Kolicina = kolicina,
@@ -86,7 +87,7 @@ namespace FrontEnd.FrontEndDomain
         }
         public void DodajTekuciRacunPonudjaca(string brojRacuna, Banka banka)
         {
-            _tekuciRacuniPonudjaca.Add(new()
+            TekuciRacuniPonudjaca.Add(new()
             {
                 PonudaId = Id,
                 Banka = banka,
@@ -95,22 +96,22 @@ namespace FrontEnd.FrontEndDomain
         }
         public void AzurirajTekuciRacunPonudjaca(Guid id, string brojRacuna, Banka banka)
         {
-            TekuciRacunPonudjaca tekuci = _tekuciRacuniPonudjaca.First(t => t.Id == id);
+            TekuciRacunPonudjaca tekuci = TekuciRacuniPonudjaca.First(t => t.Id == id);
             tekuci.Banka = banka;
             tekuci.BrojRacuna = brojRacuna;
         }
         public void ObrisiStavkuStruktureCene(Guid id)
         {
-            StavkaStruktureCene stavka = _stavkeStruktureCene.First(x => x.Id == id);
+            StavkaStruktureCene stavka = StavkeStruktureCene.First(x => x.Id == id);
 
-            _stavkeStruktureCene.Remove(stavka);
+            StavkeStruktureCene.Remove(stavka);
         }
 
         public void ObrisiTekuciRacunPonudjaca(Guid id)
         {
-            TekuciRacunPonudjaca racun = _tekuciRacuniPonudjaca.First(x => x.Id == id);
+            TekuciRacunPonudjaca racun = TekuciRacuniPonudjaca.First(x => x.Id == id);
 
-            _tekuciRacuniPonudjaca.Remove(racun);
+            TekuciRacuniPonudjaca.Remove(racun);
         }
     }
 }

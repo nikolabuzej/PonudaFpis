@@ -2,7 +2,7 @@
 {
     public class InformacijeOIsporuci
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid Id { get; set; } 
         public string Ime { get; set; } = string.Empty;
     }
 }
