@@ -42,30 +42,47 @@
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
 
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
-        <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
-            @foreach (var proizvod in PonudaViewModel.Proizvodi)
-            {
-                <option value="@proizvod.Id">@proizvod.Ime</option>
-            }
-        </InputSelect>
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
-        <button type="button" class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
-
+        <div @onfocusout="OnChangeResetStakva">
+            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
+            <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
+                @foreach (var proizvod in PonudaViewModel.Proizvodi)
+                {
+                    <option value="@proizvod.Id">@proizvod.Ime</option>
+                }
+            </InputSelect>
+            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
+            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
+        </div>
+        @if (!isEditStavke)
+        {
+            <button type="button" class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
+        }
+        else
+        {
+            <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajStavku">Azuriraj</button>
+        }
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
                                  EditStavkuCallback="@OnClickEditStavku"
                                  DeleteStavkuCallback="@OnClickDeleteStavku">
         </StavkaStruktureCeneList>
 
-        <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
-        <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
-            @foreach (var banka in PonudaViewModel.Banke)
-            {
-                <option value="@banka.Id">@banka.Ime</option>
-            }
-        </InputSelect>
-        <button type="button" class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
+        <div @onfocusout="OnChangeResetTekuci">
+            <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
+            <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
+                @foreach (var banka in PonudaViewModel.Banke)
+                {
+                    <option value="@banka.Id">@banka.Ime</option>
+                }
+            </InputSelect>
+        </div>
+        @if (!isEditTekuceg)
+        {
+            <button type="button" class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
+        }
+        else
+        {
+            <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajTekuci">Azuriraj</button>
+        }
 
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
                                   EditTekuciCallback="@OnClickEditTekuci"
@@ -88,7 +105,8 @@
     [Parameter]
     public Guid Id { get; set; }
     private bool isDisabled = true;
-
+    private bool isEditStavke = false;
+    private bool isEditTekuceg = false;
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit(Id);
@@ -97,6 +115,7 @@
     private void OnClickEditStavku(Guid id)
     {
         PonudaViewModel.StavkaStruktureCene = PonudaViewModel.Ponuda.StavkeStruktureCene.FirstOrDefault(s => s.Id == id);
+        isEditStavke = true;
     }
     private void OnClickDeleteStavku(Guid id)
     {
@@ -105,10 +124,20 @@
     private void OnClickEditTekuci(Guid id)
     {
         PonudaViewModel.TekuciRacunPonudjaca = PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.FirstOrDefault(t => t.Id == id);
+        isEditTekuceg = true;
     }
     private void OnClickDeleteTekuci(Guid id)
     {
         PonudaViewModel.Ponuda.ObrisiTekuciRacunPonudjaca(id);
     }
-
+    private void OnChangeResetStakva()
+    {
+        PonudaViewModel.StavkaStruktureCene = new();
+        isEditStavke = false;
+    }
+    private void OnChangeResetTekuci()
+    {
+        PonudaViewModel.TekuciRacunPonudjaca = new();
+        isEditTekuceg = false;
+    }
 }

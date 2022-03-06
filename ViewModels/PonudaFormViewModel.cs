@@ -99,6 +99,24 @@ namespace ViewModels
 
             Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
         }
+        public void AzurirajTekuci()
+        {
+            TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+
+            Ponuda.AzurirajTekuciRacunPonudjaca(TekuciRacunPonudjaca.Id,
+                TekuciRacunPonudjaca.BrojRacuna,
+                TekuciRacunPonudjaca.Banka);
+        }
+        public void AzurirajStavku()
+        {
+            StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
+
+            Ponuda.AzurirajStavkuStruktureCene(StavkaStruktureCene.Id,
+                                               StavkaStruktureCene.Kolicina,
+                                               StavkaStruktureCene.JedinicnaCenaBezPdv,
+                                               StavkaStruktureCene.JedinicnaCenaSaPdv,
+                                               StavkaStruktureCene.Proizvod);
+        }
        
         public async Task AzurirajPonudu()
         {
