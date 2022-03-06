@@ -15,9 +15,11 @@ namespace InfrastructureFE
             _httpClient = httpClient;
         }
 
-        public async Task AzurirajPonudu(Guid id,PonudaPayload payload)
+        public async Task<Ponuda> AzurirajPonudu(Guid id,PonudaPayload payload)
         {
-            _ = (await _httpClient.PutAsJsonAsync($"{UrlStrings.PonudaUrl}/{id}", payload)).EnsureSuccessStatusCode();
+            var response = (await _httpClient.PutAsJsonAsync($"{UrlStrings.PonudaUrl}/{id}", payload)).EnsureSuccessStatusCode();
+
+            return (await HttpUtilities.Deserialize<Ponuda>(response));
         }
 
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1, int pageSize = 1)

@@ -1,6 +1,5 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
-using FrontEndDomain.ListViewConfiguration;
 
 namespace InfrastructureFE
 {

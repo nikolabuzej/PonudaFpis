@@ -2,10 +2,11 @@
 @using FrontEnd.FrontEndDomain
 @using PonudaBlazor.Components.PonudaComponents
 @using ViewModels
+@inject NavigationManager NavigationManager;
 @inject PonudaFormViewModel PonudaViewModel;
 
 <fieldset disabled=@isDisabled>
-    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@PonudaViewModel.AzurirajPonudu">
+    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@AzurirajPonudu">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
 
@@ -41,18 +42,20 @@
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+        @foreach (var validation in PonudaViewModel.StavkaValidation)
+        {
+            <p class="text-danger">@validation.ErrorMessage</p>
+        }
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
+        <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
+            @foreach (var proizvod in PonudaViewModel.Proizvodi)
+            {
+                <option value="@proizvod.Id">@proizvod.Ime</option>
+            }
+        </InputSelect>
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
 
-        <div @onfocusout="OnChangeResetStakva">
-            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
-            <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
-                @foreach (var proizvod in PonudaViewModel.Proizvodi)
-                {
-                    <option value="@proizvod.Id">@proizvod.Ime</option>
-                }
-            </InputSelect>
-            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
-            <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
-        </div>
         @if (!isEditStavke)
         {
             <button type="button" class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
@@ -61,12 +64,17 @@
         {
             <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajStavku">Azuriraj</button>
         }
+        <button type="button" class="btn btn-light" @onclick="OnChangeResetStakva">Odustani</button>
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
                                  EditStavkuCallback="@OnClickEditStavku"
                                  DeleteStavkuCallback="@OnClickDeleteStavku">
         </StavkaStruktureCeneList>
 
-        <div @onfocusout="OnChangeResetTekuci">
+        <div>
+            @foreach (var validation in PonudaViewModel.TekuciValidation)
+            {
+                <p class="text-danger">@validation.ErrorMessage</p>
+            }
             <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
             <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
                 @foreach (var banka in PonudaViewModel.Banke)
@@ -83,13 +91,14 @@
         {
             <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajTekuci">Azuriraj</button>
         }
-
+        <button type="button" class="btn btn-light" @onclick="OnChangeResetTekuci">Odustani</button>
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
                                   EditTekuciCallback="@OnClickEditTekuci"
                                   DeleteTekuciCallback="@OnClickDeleteTekuci"></TekuciRacunPonudjacaList>
+
         @if (!isDisabled)
         {
-            <button type="submit">Submit</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
         }
 
     </EditForm>
@@ -107,9 +116,11 @@
     private bool isDisabled = true;
     private bool isEditStavke = false;
     private bool isEditTekuceg = false;
+    private EditContext? CurrentEditContext { get; set; }
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit(Id);
+
     }
 
     private void OnClickEditStavku(Guid id)
@@ -134,6 +145,11 @@
     {
         PonudaViewModel.StavkaStruktureCene = new();
         isEditStavke = false;
+    }
+    private async Task AzurirajPonudu()
+    {
+        await PonudaViewModel.AzurirajPonudu();
+        NavigationManager.NavigateTo("ponuda");
     }
     private void OnChangeResetTekuci()
     {

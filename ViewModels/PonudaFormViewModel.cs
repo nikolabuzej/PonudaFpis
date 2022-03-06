@@ -1,10 +1,12 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
+using FrontEndDomain.Extensions;
 using FrontEndDomain.Payloads;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModels
 {
-    public class PonudaFormViewModel: BaseViewModel
+    public class PonudaFormViewModel : BaseViewModel
     {
         private readonly IPonudaService _ponudaService;
         private readonly IPonudjacService _ponudjacService;
@@ -15,9 +17,9 @@ namespace ViewModels
 
 
         private Ponuda _ponuda = Ponuda.Default();
-        private  List<JavniPoziv> _javniPozivi = Enumerable.Empty<JavniPoziv>().ToList();
-        private  List<Ponudjac> _ponudjaci = Enumerable.Empty<Ponudjac>().ToList();
-        private  List<InformacijeOIsporuci> _informacijeOIsporuci = Enumerable.Empty<InformacijeOIsporuci>().ToList();
+        private List<JavniPoziv> _javniPozivi = Enumerable.Empty<JavniPoziv>().ToList();
+        private List<Ponudjac> _ponudjaci = Enumerable.Empty<Ponudjac>().ToList();
+        private List<InformacijeOIsporuci> _informacijeOIsporuci = Enumerable.Empty<InformacijeOIsporuci>().ToList();
         private List<Proizvod> _proizvodi = Enumerable.Empty<Proizvod>().ToList();
         private List<Banka> _banke = Enumerable.Empty<Banka>().ToList();
 
@@ -51,7 +53,18 @@ namespace ViewModels
             get => _ponuda;
             set => SetValue(ref _ponuda, value);
         }
-
+        private List<ValidationResult> _stavkaValidation = Enumerable.Empty<ValidationResult>().ToList();
+        private List<ValidationResult> _tekuciValidation = Enumerable.Empty<ValidationResult>().ToList();
+        public List<ValidationResult> StavkaValidation
+        {
+            get => _stavkaValidation;
+            set => SetValue(ref _stavkaValidation, value);
+        }
+        public List<ValidationResult> TekuciValidation
+        {
+            get => _tekuciValidation;
+            set => SetValue(ref _tekuciValidation, value);
+        }
         public StavkaStruktureCene StavkaStruktureCene { get; set; } = new();
         public TekuciRacunPonudjaca TekuciRacunPonudjaca { get; set; } = new();
 
@@ -68,6 +81,7 @@ namespace ViewModels
             _informacijeOIsporuciService = informacijeOIsporuciService;
             _bankaService = bankaService;
             _javniPozivService = javniPozivService;
+            Ponuda = Ponuda.Default();
         }
 
         public async Task OnInit(Guid id)
@@ -79,7 +93,7 @@ namespace ViewModels
             InformacijeOIsporuci = (await _informacijeOIsporuciService.VratiInformacijeOIsporuci()).ToList();
             Proizvodi = (await _proizvodService.VratiProizvode()).Data.ToList();
             Banke = (await _bankaService.VratiBanke()).ToList();
-          
+
         }
         public async Task<Ponuda> VratiPonudu(Guid id)
         {
@@ -89,35 +103,47 @@ namespace ViewModels
         }
         public void DodajStavku()
         {
-            StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
+            if (StavkaStruktureCene.IsValid(StavkaValidation))
+            {
+                StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod?.Id);
 
-            Ponuda.StavkeStruktureCene.Add(StavkaStruktureCene);
+                Ponuda.StavkeStruktureCene.Add(StavkaStruktureCene);
+            }
+
         }
         public void DodajTekuci()
         {
-            TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
-
-            Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
+            if (TekuciRacunPonudjaca.IsValid(TekuciValidation))
+            {
+                TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+                Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
+            }
         }
         public void AzurirajTekuci()
         {
-            TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+            if (TekuciRacunPonudjaca.Validate(TekuciValidation))
+            {
+                TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
 
-            Ponuda.AzurirajTekuciRacunPonudjaca(TekuciRacunPonudjaca.Id,
-                TekuciRacunPonudjaca.BrojRacuna,
-                TekuciRacunPonudjaca.Banka);
+                Ponuda.AzurirajTekuciRacunPonudjaca(TekuciRacunPonudjaca.Id,
+                    TekuciRacunPonudjaca.BrojRacuna,
+                    TekuciRacunPonudjaca.Banka);
+            }
         }
         public void AzurirajStavku()
         {
-            StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
+            if (StavkaStruktureCene.Validate(StavkaValidation))
+            {
+                StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
 
-            Ponuda.AzurirajStavkuStruktureCene(StavkaStruktureCene.Id,
-                                               StavkaStruktureCene.Kolicina,
-                                               StavkaStruktureCene.JedinicnaCenaBezPdv,
-                                               StavkaStruktureCene.JedinicnaCenaSaPdv,
-                                               StavkaStruktureCene.Proizvod);
+                Ponuda.AzurirajStavkuStruktureCene(StavkaStruktureCene.Id,
+                                                   StavkaStruktureCene.Kolicina,
+                                                   StavkaStruktureCene.JedinicnaCenaBezPdv,
+                                                   StavkaStruktureCene.JedinicnaCenaSaPdv,
+                                                   StavkaStruktureCene.Proizvod);
+            }
         }
-       
+
         public async Task AzurirajPonudu()
         {
             PonudaPayload payload = new()
@@ -145,7 +171,7 @@ namespace ViewModels
                 }).ToList()
             };
 
-            await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
+            Ponuda = await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
         }
     }
 }

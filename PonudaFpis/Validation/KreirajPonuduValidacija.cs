@@ -27,7 +27,7 @@ namespace PonudaFpis.Validation
             {
                 s.RuleFor(s => s.JedinicnaCenaSaPdv).GreaterThan(1);
                 s.RuleFor(s => s.JedinicnaCenaBezPdv).GreaterThan(1);
-                s.RuleFor(s => s.Kolicina).GreaterThan(1);
+                s.RuleFor(s => s.Kolicina).GreaterThanOrEqualTo(1);
                 s.RuleFor(s => s.ProizvodId).Null().NotEmpty();
             });
 

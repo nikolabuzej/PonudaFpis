@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FrontEndDomain.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace FrontEnd.FrontEndDomain
 {
@@ -11,13 +12,25 @@ namespace FrontEnd.FrontEndDomain
         [Range(1, 100)]
         public int Kolicina { get; set; } = 1;
 
-        [Range(0, double.MaxValue)]
+        [Range(1, double.MaxValue)]
         public double JedinicnaCenaSaPdv { get; set; }
 
-        [Range(0, double.MaxValue)]
+        [Range(1, double.MaxValue)]
         public double JedinicnaCenaBezPdv { get; set; }
-
+        [Required]
         public Proizvod Proizvod { get; set; } = new();
+
+        public bool IsValid(List<ValidationResult> results)
+        {
+            var isValid = this.Validate(results);
+            if(Proizvod.Id == Guid.Empty)
+            {
+                isValid = false;
+                results.Add(new ValidationResult("Proizvod cannot be empty"));
+            }
+
+            return isValid;
+        }
 
     }
 }
