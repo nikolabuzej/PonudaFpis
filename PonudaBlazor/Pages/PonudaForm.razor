@@ -6,7 +6,7 @@
 
 <fieldset disabled=@isDisabled>
     <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@HandleValidSubmit">
-        <DataAnnotationsValidator />
+        <ObjectGraphDataAnnotationsValidator/>
         <ValidationSummary />
 
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
@@ -51,6 +51,8 @@
         </InputSelect>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
+        <button class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
+
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
                                  EditStavkuCallback="@OnClickEditStavku"
                                  DeleteStavkuCallback="@OnClickDeleteStavku">
@@ -63,6 +65,7 @@
                 <option value="@banka.Id">@banka.Ime</option>
             }
         </InputSelect>
+        <button class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
 
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
                                   EditTekuciCallback="@OnClickEditTekuci"
@@ -70,6 +73,7 @@
 
     </EditForm>
 </fieldset>
+
 @if (isDisabled)
 {
     <button @onclick="@(e=> isDisabled = false)">Edit</button>

@@ -89,7 +89,18 @@ namespace ViewModels
 
             return response;
         }
+        public void DodajStavku()
+        {
+            StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
 
+            Ponuda.StavkeStruktureCene.Add(StavkaStruktureCene);
+        }
+        public void DodajTekuci()
+        {
+            TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+
+            Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
+        }
        
     }
 }
