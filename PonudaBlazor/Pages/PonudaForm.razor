@@ -56,6 +56,17 @@
                                  DeleteStavkuCallback="@OnClickDeleteStavku">
         </StavkaStruktureCeneList>
 
+        <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
+        <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
+            @foreach (var banka in PonudaViewModel.Banke)
+            {
+                <option value="@banka.Id">@banka.Ime</option>
+            }
+        </InputSelect>
+
+        <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
+                                  EditTekuciCallback="@OnClickEditTekuci"
+                                  DeleteTekuciCallback="@OnClickDeleteTekuci"></TekuciRacunPonudjacaList>
 
     </EditForm>
 </fieldset>
@@ -91,6 +102,14 @@ else
     private void OnClickDeleteStavku(Guid id)
     {
         PonudaViewModel.Ponuda.ObrisiStavkuStruktureCene(id);
+    }
+    private void OnClickEditTekuci(Guid id)
+    {
+        PonudaViewModel.TekuciRacunPonudjaca = PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.FirstOrDefault(t => t.Id == id);
+    }
+    private void OnClickDeleteTekuci(Guid id)
+    {
+        PonudaViewModel.Ponuda.ObrisiTekuciRacunPonudjaca(id);
     }
 
 }

@@ -1,0 +1,43 @@
+﻿@using FrontEnd.FrontEndDomain
+<h4 class="align-content-center">Tekuci racuni ponudjaca</h4>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Broj racuna</th>
+            <th>Banka</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var tekuci in TekuciRacuni)
+        {
+            <tr>
+                <td>@tekuci.BrojRacuna</td>
+                <td>@tekuci.Banka.Ime</td>
+                <td><span class="oi oi-pencil" aria-hidden="true" @onclick="()=> OnClickEditTekuci(tekuci.Id)"></span></td>
+                <td><span class="oi oi-trash" aria-hidden="true" @onclick="()=> OnClickDeleteTekuci(tekuci.Id)"></span></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public List<TekuciRacunPonudjaca> TekuciRacuni { get; set; } = Enumerable.Empty<TekuciRacunPonudjaca>().ToList();
+    [Parameter]
+    public EventCallback<Guid>  EditTekuciCallback { get; set; }
+    [Parameter]
+    public EventCallback<Guid> DeleteTekuciCallback { get; set; }
+
+    private async Task OnClickEditTekuci(Guid id)
+    {
+        await EditTekuciCallback.InvokeAsync(id);
+    }
+    private async Task OnClickDeleteTekuci(Guid id)
+    {
+        await DeleteTekuciCallback.InvokeAsync(id);
+    }
+
+
+}
