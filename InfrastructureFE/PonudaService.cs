@@ -1,6 +1,8 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
 using FrontEndDomain.ListViewConfiguration;
+using FrontEndDomain.Payloads;
+using System.Net.Http.Json;
 
 namespace InfrastructureFE
 {
@@ -11,6 +13,11 @@ namespace InfrastructureFE
         public PonudaService(HttpClient httpClient)
         {
             _httpClient = httpClient;
+        }
+
+        public async Task AzurirajPonudu(Guid id,PonudaPayload payload)
+        {
+            _ = (await _httpClient.PutAsJsonAsync($"{UrlStrings.PonudaUrl}/{id}", payload)).EnsureSuccessStatusCode();
         }
 
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1, int pageSize = 1)

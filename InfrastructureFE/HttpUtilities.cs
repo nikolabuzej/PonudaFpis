@@ -18,7 +18,14 @@ namespace InfrastructureFE
 
             return reponse;
         }
+        public static HttpContent CreateBody<T>(T payload)
+        {
+            var json = JsonSerializer.Serialize<T>(payload);
 
+            var content =  new StringContent(json,Encoding.UTF8,"application/json");
+
+            return content;
+        }
         public static string AppendQueryString(string url,Dictionary<string,string> parameters)
         {
             bool startingQuestionMarkAdded = false;

@@ -1,6 +1,6 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
-using ViewModels.Payloads;
+using FrontEndDomain.Payloads;
 
 namespace ViewModels
 {
@@ -55,8 +55,6 @@ namespace ViewModels
         public StavkaStruktureCene StavkaStruktureCene { get; set; } = new();
         public TekuciRacunPonudjaca TekuciRacunPonudjaca { get; set; } = new();
 
-        public PonudaPayload PonudaPayload { get; set; } = new();
-
         public PonudaFormViewModel(IPonudaService ponudaService,
                                    IPonudjacService ponudjacService,
                                    IProizvodService proizvodService,
@@ -102,5 +100,34 @@ namespace ViewModels
             Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
         }
        
+        public async Task AzurirajPonudu()
+        {
+            PonudaPayload payload = new()
+            {
+                DatumPristizanja = Ponuda.DatumPristizanja,
+                ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
+                InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
+                JavniPozivId = Ponuda.JavniPoziv.Id,
+                Kontakt = Ponuda.Kontakt,
+                PonudjacId = Ponuda.Ponudjac.Id,
+                Status = Ponuda.Status,
+                StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                {
+                    Id = s.Id,
+                    JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
+                    JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
+                    Kolicina = s.Kolicina,
+                    ProizvodId = s.Proizvod.Id
+                }).ToList(),
+                TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
+                {
+                    Id = t.Id,
+                    BankaId = t.Banka.Id,
+                    BrojRacuna = t.BrojRacuna
+                }).ToList()
+            };
+
+            await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
+        }
     }
 }

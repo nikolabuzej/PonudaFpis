@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ViewModels.Payloads
+namespace FrontEndDomain.Payloads
 {
     public class TekuciRacunPonudjacaPayload
     {

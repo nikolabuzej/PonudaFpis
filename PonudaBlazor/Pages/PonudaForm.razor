@@ -5,8 +5,8 @@
 @inject PonudaFormViewModel PonudaViewModel;
 
 <fieldset disabled=@isDisabled>
-    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@HandleValidSubmit">
-        <ObjectGraphDataAnnotationsValidator/>
+    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@PonudaViewModel.AzurirajPonudu">
+        <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
 
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
@@ -51,7 +51,7 @@
         </InputSelect>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
-        <button class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
+        <button type="button" class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
 
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
                                  EditStavkuCallback="@OnClickEditStavku"
@@ -65,23 +65,23 @@
                 <option value="@banka.Id">@banka.Ime</option>
             }
         </InputSelect>
-        <button class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
+        <button type="button" class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
 
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
                                   EditTekuciCallback="@OnClickEditTekuci"
                                   DeleteTekuciCallback="@OnClickDeleteTekuci"></TekuciRacunPonudjacaList>
+        @if (!isDisabled)
+        {
+            <button type="submit">Submit</button>
+        }
 
     </EditForm>
 </fieldset>
-
 @if (isDisabled)
 {
-    <button @onclick="@(e=> isDisabled = false)">Edit</button>
+    <button type="button" @onclick="@(e=> isDisabled = false)">Edit</button>
 }
-else
-{
-    <button type="submit">Submit</button>
-}
+
 
 @code
 {
@@ -92,11 +92,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit(Id);
-    }
-
-    public Task HandleValidSubmit()
-    {
-        return Task.CompletedTask;
     }
 
     private void OnClickEditStavku(Guid id)

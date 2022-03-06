@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ViewModels.Dtos
+namespace FrontEndDomain.Payloads
 {
     public class StavkaStruktureCenePayload
     {

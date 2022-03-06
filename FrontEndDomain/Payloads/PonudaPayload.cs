@@ -1,8 +1,7 @@
 ﻿using FrontEnd.FrontEndDomain;
 using System.ComponentModel.DataAnnotations;
-using ViewModels.Dtos;
 
-namespace ViewModels.Payloads
+namespace FrontEndDomain.Payloads
 {
     public class PonudaPayload
     {
@@ -19,7 +18,7 @@ namespace ViewModels.Payloads
         public Guid InformacijeOIsporuciId { get; set; }
         [Required]
         public StatusPonude Status { get; set; }
-        public IEnumerable<StavkaStruktureCenePayload> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCenePayload>();
-        public IEnumerable<TekuciRacunPonudjacaPayload> TekuciRacuniPonudjaca { get; set; } = Enumerable.Empty<TekuciRacunPonudjacaPayload>();
+        public List<StavkaStruktureCenePayload> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCenePayload>().ToList();
+        public List<TekuciRacunPonudjacaPayload> TekuciRacuniPonudjaca { get; set; } = Enumerable.Empty<TekuciRacunPonudjacaPayload>().ToList();
     }
 }
