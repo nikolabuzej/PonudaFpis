@@ -6,55 +6,58 @@
 
 <fieldset disabled=@isDisabled>
     <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    
-    <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
-        @foreach(var javniPoziv in PonudaViewModel.JavniPozivi)
-        {
-            <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
-        }
-    </InputSelect>
-    <InputSelect @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
-        @foreach(var ponudjac in PonudaViewModel.Ponudjaci)
-        {
-            <option value="@ponudjac.Id">@ponudjac.Ime</option>
-        }
-    </InputSelect>
-    <InputSelect @bind-Value="PonudaViewModel.Ponuda.Status">
-        @foreach(var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
-        {
-            <option value="@status">@status.ToString()</option>
-        }
-    </InputSelect>
-    <InputSelect @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
-        @foreach(var ioi in PonudaViewModel.InformacijeOIsporuci)
-        {
-            <option value="@ioi.Id">@ioi.Ime</option>
-        }
-    </InputSelect>
+        <DataAnnotationsValidator />
+        <ValidationSummary />
 
-    <InputDate @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
+        <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
+            @foreach (var javniPoziv in PonudaViewModel.JavniPozivi)
+            {
+                <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
+            }
+        </InputSelect>
+        <InputSelect @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
+            @foreach (var ponudjac in PonudaViewModel.Ponudjaci)
+            {
+                <option value="@ponudjac.Id">@ponudjac.Ime</option>
+            }
+        </InputSelect>
+        <InputSelect @bind-Value="PonudaViewModel.Ponuda.Status">
+            @foreach (var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
+            {
+                <option value="@status">@status.ToString()</option>
+            }
+        </InputSelect>
+        <InputSelect @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
+            @foreach (var ioi in PonudaViewModel.InformacijeOIsporuci)
+            {
+                <option value="@ioi.Id">@ioi.Ime</option>
+            }
+        </InputSelect>
 
-    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
-    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
-    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
-    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
-    <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+        <InputDate @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
 
-    <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
-    <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
-            @foreach(var proizvod in PonudaViewModel.Proizvodi)
+        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
+        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
+        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
+        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
+        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
+        <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
+            @foreach (var proizvod in PonudaViewModel.Proizvodi)
             {
                 <option value="@proizvod.Id">@proizvod.Ime</option>
             }
         </InputSelect>
-    <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
-    <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
-    <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()></StavkaStruktureCeneList>
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
+        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
+        <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
+                                 EditStavkuCallback="@OnClickEditStavku"
+                                 DeleteStavkuCallback="@OnClickDeleteStavku">
+        </StavkaStruktureCeneList>
 
 
-</EditForm>
+    </EditForm>
 </fieldset>
 @if (isDisabled)
 {
@@ -79,6 +82,15 @@ else
     public Task HandleValidSubmit()
     {
         return Task.CompletedTask;
+    }
+
+    private void OnClickEditStavku(Guid id)
+    {
+        PonudaViewModel.StavkaStruktureCene = PonudaViewModel.Ponuda.StavkeStruktureCene.FirstOrDefault(s => s.Id == id);
+    }
+    private void OnClickDeleteStavku(Guid id)
+    {
+        PonudaViewModel.Ponuda.ObrisiStavkuStruktureCene(id);
     }
 
 }

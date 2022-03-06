@@ -1,23 +1,23 @@
 ﻿@using FrontEnd.FrontEndDomain;
 <table class="table">
     <thead>
-       <tr>
-        <th>Kolicina</th>
-        <th>Proizvod</th>
-        <th>Jedinicna cena bez PDV</th>
-        <th>Jedinicna cena sa PDV</th>
-       </tr>
+        <tr>
+            <th>Kolicina</th>
+            <th>Proizvod</th>
+            <th>Jedinicna cena bez PDV</th>
+            <th>Jedinicna cena sa PDV</th>
+        </tr>
     </thead>
     <tbody>
-        @foreach(StavkaStruktureCene stavka in StavkeStruktureCene)
+        @foreach (StavkaStruktureCene stavka in StavkeStruktureCene)
         {
             <tr>
                 <td>@stavka.Kolicina</td>
                 <td>@stavka.Proizvod.Ime</td>
                 <td>@stavka.JedinicnaCenaBezPdv</td>
                 <td>@stavka.JedinicnaCenaSaPdv</td>
-                <td><button ><span class="oi oi-pencil" aria-hidden="true"></span></button></td>
-                <td><button><span class="oi oi-trash" aria-hidden="true"></span></button></td>
+                <td><button @onclick="()=> EditStavku(stavka.Id)"><span class="oi oi-pencil" aria-hidden="true"></span></button></td>
+                <td><button @onclick="()=> DeleteStavku(stavka.Id)"><span class="oi oi-trash" aria-hidden="true"></span></button></td>
             </tr>
         }
     </tbody>
@@ -27,4 +27,19 @@
 @code {
     [Parameter]
     public List<StavkaStruktureCene> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCene>().ToList();
+    [Parameter]
+    public EventCallback<Guid> EditStavkuCallback { get; set; }
+
+    [Parameter]
+    public EventCallback<Guid> DeleteStavkuCallback { get; set; }
+
+    private async Task DeleteStavku(Guid id)
+    {
+        await DeleteStavkuCallback.InvokeAsync(id);
+    }
+
+    private async Task EditStavku(Guid id)
+    {
+        await EditStavkuCallback.InvokeAsync(id);
+    }
 }
