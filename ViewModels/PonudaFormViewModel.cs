@@ -86,8 +86,11 @@ namespace ViewModels
 
         public async Task OnInit(Guid id)
         {
-            var ponuda = await VratiPonudu(id);
-            Ponuda = ponuda;
+            if (id != Guid.Empty)
+            {
+                var ponuda = await VratiPonudu(id);
+                Ponuda = ponuda;
+            }
             JavniPozivi = (await _javniPozivService.VratiJavnePozive()).ToList();
             Ponudjaci = (await _ponudjacService.VratiPonudjace()).ToList();
             InformacijeOIsporuci = (await _informacijeOIsporuciService.VratiInformacijeOIsporuci()).ToList();
@@ -172,6 +175,35 @@ namespace ViewModels
             };
 
             Ponuda = await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
+        }
+        public async Task KreirajPonudu()
+        {
+            PonudaPayload payload = new()
+            {
+                DatumPristizanja = Ponuda.DatumPristizanja,
+                ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
+                InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
+                JavniPozivId = Ponuda.JavniPoziv.Id,
+                Kontakt = Ponuda.Kontakt,
+                PonudjacId = Ponuda.Ponudjac.Id,
+                Status = Ponuda.Status,
+                StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                {
+                    Id = s.Id,
+                    JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
+                    JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
+                    Kolicina = s.Kolicina,
+                    ProizvodId = s.Proizvod.Id
+                }).ToList(),
+                TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
+                {
+                    Id = t.Id,
+                    BankaId = t.Banka.Id,
+                    BrojRacuna = t.BrojRacuna
+                }).ToList()
+            };
+
+            Ponuda = await _ponudaService.KreirajPonudu(payload);
         }
     }
 }

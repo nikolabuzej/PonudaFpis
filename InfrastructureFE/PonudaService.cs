@@ -22,6 +22,13 @@ namespace InfrastructureFE
             return (await HttpUtilities.Deserialize<Ponuda>(response));
         }
 
+        public async Task<Ponuda> KreirajPonudu(PonudaPayload payload)
+        {
+            var response = (await _httpClient.PostAsJsonAsync($"{UrlStrings.PonudaUrl}", payload)).EnsureSuccessStatusCode();
+
+            return (await HttpUtilities.Deserialize<Ponuda>(response));
+        }
+
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1, int pageSize = 1)
         {
             var parameters = new Dictionary<string, string>();

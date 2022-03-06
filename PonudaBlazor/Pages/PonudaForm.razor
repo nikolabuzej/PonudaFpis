@@ -1,4 +1,5 @@
 ﻿@page "/ponuda/{Id:guid}"
+@page "/ponuda/kreiraj"
 @using FrontEnd.FrontEndDomain
 @using PonudaBlazor.Components.PonudaComponents
 @using ViewModels
@@ -6,54 +7,70 @@
 @inject PonudaFormViewModel PonudaViewModel;
 
 <fieldset disabled=@isDisabled>
-    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@AzurirajPonudu">
+    <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@UnesiPonudu">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
-
+        <label>Javni poziv</label>
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
             @foreach (var javniPoziv in PonudaViewModel.JavniPozivi)
             {
                 <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
             }
         </InputSelect>
+        <label>Ponudjac</label>
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
             @foreach (var ponudjac in PonudaViewModel.Ponudjaci)
             {
                 <option value="@ponudjac.Id">@ponudjac.Ime</option>
             }
         </InputSelect>
+        <label>Status</label>
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.Status">
             @foreach (var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
             {
                 <option value="@status">@status.ToString()</option>
             }
         </InputSelect>
+        <label>Informacije O Isporuci</label>
         <InputSelect @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
             @foreach (var ioi in PonudaViewModel.InformacijeOIsporuci)
             {
                 <option value="@ioi.Id">@ioi.Ime</option>
             }
         </InputSelect>
-
+        <label>Datum pristizanja</label>
         <InputDate @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
-
+        <label>Zakonski zastupnik</label>
+        <InputText @bind-Value="PonudaViewModel.Ponuda.ZakonskiZastupnik"></InputText>
+        <h5>Kontakt osoba</h5>
+        <label>Ime</label>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
+        <label>Prezime</label>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
+        <label>Email</label>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
+        <label>Jmbg</label>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
+        <label>Telefon</label>
         <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+
+        <h4>Stavke strukture cene</h4>
         @foreach (var validation in PonudaViewModel.StavkaValidation)
         {
             <p class="text-danger">@validation.ErrorMessage</p>
         }
+        <label>Kolicina</label>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
+        <label>Proizvod</label>
         <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
             @foreach (var proizvod in PonudaViewModel.Proizvodi)
             {
                 <option value="@proizvod.Id">@proizvod.Ime</option>
             }
         </InputSelect>
+        <label>Jedinicna cena bez PDV</label>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
+        <label>Jedinicna cena sa PDV</label>
         <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
 
         @if (!isEditStavke)
@@ -75,7 +92,9 @@
             {
                 <p class="text-danger">@validation.ErrorMessage</p>
             }
+            <label>BrojRacuna</label>
             <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
+            <label>Banka</label>
             <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
                 @foreach (var banka in PonudaViewModel.Banke)
                 {
@@ -119,8 +138,8 @@
     private EditContext? CurrentEditContext { get; set; }
     protected override async Task OnInitializedAsync()
     {
+        isDisabled = Id != Guid.Empty;
         await PonudaViewModel.OnInit(Id);
-
     }
 
     private void OnClickEditStavku(Guid id)
@@ -146,9 +165,17 @@
         PonudaViewModel.StavkaStruktureCene = new();
         isEditStavke = false;
     }
-    private async Task AzurirajPonudu()
+    private async Task UnesiPonudu()
     {
-        await PonudaViewModel.AzurirajPonudu();
+        if(Id == Guid.Empty)
+        {
+            await PonudaViewModel.KreirajPonudu();
+
+        }
+        else
+        {
+            await PonudaViewModel.AzurirajPonudu();
+        }
         NavigationManager.NavigateTo("ponuda");
     }
     private void OnChangeResetTekuci()

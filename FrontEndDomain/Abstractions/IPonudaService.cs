@@ -9,5 +9,6 @@ namespace FrontEndDomain.Abstractions
         public Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1,int pageSize = 1);
         public Task<Ponuda> VratiPonudu(Guid id);
         public Task<Ponuda> AzurirajPonudu(Guid id,PonudaPayload payload);
+        public Task<Ponuda> KreirajPonudu(PonudaPayload payload);
     }
 }
