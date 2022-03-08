@@ -37,14 +37,20 @@ namespace ViewModels
         {
             Ponude = await this.VratiPonude(Ponude.Pagination.TotalPages, Ponude.Pagination.PageSize);
         }
-        public async Task FirstPage()
+       
+        public async Task NavigateToPage(int pageNumber)
         {
-            Ponude = await this.VratiPonude(1, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(pageNumber, Ponude.Pagination.PageSize);
+        }
+        public List<int> CreateSpread()
+        {
+            return Enumerable.Range(1, Ponude.Pagination.TotalPages).ToList();
         }
         public string GetPageStatus()
         {
             return $"{Ponude.Pagination.CurrentPage}/{Ponude.Pagination.TotalPages}";
         }
+
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber, int pageSize)
         {
             ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize);

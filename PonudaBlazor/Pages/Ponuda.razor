@@ -6,14 +6,31 @@
 @inject NavigationManager NavigationManager;
 
 <PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
-<div class="">
-    <span class="oi oi-media-skip-backward" @onclick="PonudaViewModel.FirstPage"></span>
-    <span class="oi oi-arrow-thick-left" @onclick="PonudaViewModel.PrevoiusPage"></span>
-    <span >@PonudaViewModel.GetPageStatus()</span>
-    <span class="oi oi-arrow-thick-right" @onclick="PonudaViewModel.NextPage"></span>
-    <span class="oi oi-media-skip-forward" @onclick="PonudaViewModel.LastPage"></span>
-</div>
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        <li class="page-item">
+            <span class="page-link" @onclick="PonudaViewModel.PrevoiusPage">Previous</span>
+        </li>
+        @foreach (var number in PonudaViewModel.CreateSpread())
+        {
+            @if (number == PonudaViewModel.Ponude.Pagination.CurrentPage)
+            {
+                <li class="page-item"><span class="page-link" @onclick="()=>PonudaViewModel.NavigateToPage(number)">@number</span></li>
 
+            }
+            else
+            {
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link" @onclick="()=>PonudaViewModel.NavigateToPage(number)">@number</span>
+                </li>
+            }
+
+        }
+        <li class="page-item">
+            <span class="page-link" @onclick="PonudaViewModel.NextPage">Next</span>
+        </li>
+    </ul>
+</nav>
 @code
 {
     protected override async Task OnInitializedAsync()
