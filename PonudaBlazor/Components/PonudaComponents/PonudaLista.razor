@@ -12,6 +12,7 @@ else
             <th>Status</th>
             <th>Datum pristizanja</th>
             <th>Zakonski zastupnik</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -21,7 +22,7 @@ else
                 <td>@ponuda.Status</td>
                 <td>@ponuda.DatumPristizanja</td>
                 <td>@ponuda.ZakonskiZastupnik</td>
-                <td><button @onclick="() => PassBack(ponuda.Id)"> click</button></td>
+                <td><span class="oi oi-external-link" @onclick="() => PassBack(ponuda.Id)"></span></td>
             </tr>
         }
     </tbody>

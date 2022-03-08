@@ -10,105 +10,161 @@
     <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@UnesiPonudu">
         <ObjectGraphDataAnnotationsValidator />
         <ValidationSummary />
-        <label>Javni poziv</label>
-        <InputSelect @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
-            @foreach (var javniPoziv in PonudaViewModel.JavniPozivi)
-            {
-                <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
-            }
-        </InputSelect>
-        <label>Ponudjac</label>
-        <InputSelect @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
-            @foreach (var ponudjac in PonudaViewModel.Ponudjaci)
-            {
-                <option value="@ponudjac.Id">@ponudjac.Ime</option>
-            }
-        </InputSelect>
-        <label>Status</label>
-        <InputSelect @bind-Value="PonudaViewModel.Ponuda.Status">
-            @foreach (var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
-            {
-                <option value="@status">@status.ToString()</option>
-            }
-        </InputSelect>
-        <label>Informacije O Isporuci</label>
-        <InputSelect @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
-            @foreach (var ioi in PonudaViewModel.InformacijeOIsporuci)
-            {
-                <option value="@ioi.Id">@ioi.Ime</option>
-            }
-        </InputSelect>
-        <label>Datum pristizanja</label>
-        <InputDate @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
-        <label>Zakonski zastupnik</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.ZakonskiZastupnik"></InputText>
+        <div class="row">
+            <div class="col">
+                <label>Javni poziv</label>
+                <InputSelect class="form-select" @bind-Value="PonudaViewModel.Ponuda.JavniPoziv.Id">
+                    @foreach (var javniPoziv in PonudaViewModel.JavniPozivi)
+                    {
+                        <option value="@javniPoziv.Id">@javniPoziv.Ime</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col">
+                <label>Ponudjac</label>
+                <InputSelect class="form-select" @bind-Value="PonudaViewModel.Ponuda.Ponudjac.Id">
+                    @foreach (var ponudjac in PonudaViewModel.Ponudjaci)
+                    {
+                        <option value="@ponudjac.Id">@ponudjac.Ime</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Status</label>
+                <InputSelect class="form-select" @bind-Value="PonudaViewModel.Ponuda.Status">
+                    @foreach (var status in Enum.GetValues(typeof(StatusPonude)).Cast<StatusPonude>())
+                    {
+                        <option value="@status">@status.ToString()</option>
+                    }
+                </InputSelect>
+            </div>
+            <div class="col">
+                <label>Informacije O Isporuci</label>
+                <InputSelect class="form-select" @bind-Value="PonudaViewModel.Ponuda.InformacijeOIsporuci.Id">
+                    @foreach (var ioi in PonudaViewModel.InformacijeOIsporuci)
+                    {
+                        <option value="@ioi.Id">@ioi.Ime</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Datum pristizanja</label>
+                <InputDate class="form-control" @bind-Value="PonudaViewModel.Ponuda.DatumPristizanja"></InputDate>
+            </div>
+            <div class="col">
+                <label>Zakonski zastupnik</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.ZakonskiZastupnik"></InputText>
+            </div>
+        </div>
+        <hr />
+
         <h5>Kontakt osoba</h5>
-        <label>Ime</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
-        <label>Prezime</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
-        <label>Email</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
-        <label>Jmbg</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
-        <label>Telefon</label>
-        <InputText @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+        <div class="row">
+            <div class="col">
+                <label>Ime</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.Kontakt.Ime"></InputText>
+            </div>
+            <div class="col">
+                <label>Prezime</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.Kontakt.Prezime"></InputText>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Email</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.Kontakt.Email"></InputText>
+            </div>
+            <div class="col">
+                <label>Jmbg</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.Kontakt.Jmbg"></InputText>
+            </div>
+            <div class="col">
+                <label>Telefon</label>
+                <InputText class="form-control" @bind-Value="PonudaViewModel.Ponuda.Kontakt.Telefon"></InputText>
+            </div>
+        </div>
+        <hr />
 
         <h4>Stavke strukture cene</h4>
         @foreach (var validation in PonudaViewModel.StavkaValidation)
         {
             <p class="text-danger">@validation.ErrorMessage</p>
         }
-        <label>Kolicina</label>
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
-        <label>Proizvod</label>
-        <InputSelect @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
-            @foreach (var proizvod in PonudaViewModel.Proizvodi)
-            {
-                <option value="@proizvod.Id">@proizvod.Ime</option>
-            }
-        </InputSelect>
-        <label>Jedinicna cena bez PDV</label>
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
-        <label>Jedinicna cena sa PDV</label>
-        <InputNumber @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
-
+        <div class="row">
+            <div class="col">
+                <label>Kolicina</label>
+                <InputNumber class="form-control" @bind-Value=PonudaViewModel.StavkaStruktureCene.Kolicina></InputNumber>
+            </div>
+            <div class="col">
+                <label>Proizvod</label>
+                <InputSelect class="form-select" @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
+                    @foreach (var proizvod in PonudaViewModel.Proizvodi)
+                    {
+                        <option value="@proizvod.Id">@proizvod.Ime</option>
+                    }
+                </InputSelect>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <label>Jedinicna cena bez PDV</label>
+                <InputNumber class="form-control" @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaBezPdv></InputNumber>
+            </div>
+            <div class="col">
+                <label>Jedinicna cena sa PDV</label>
+                <InputNumber class="form-control" @bind-Value=PonudaViewModel.StavkaStruktureCene.JedinicnaCenaSaPdv></InputNumber>
+            </div>
+        </div>
+        <hr />
         @if (!isEditStavke)
         {
-            <button type="button" class="btn" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
+            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.DodajStavku">Dodaj</button>
         }
         else
         {
-            <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajStavku">Azuriraj</button>
+            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.AzurirajStavku">Azuriraj</button>
         }
         <button type="button" class="btn btn-light" @onclick="OnChangeResetStakva">Odustani</button>
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
                                  EditStavkuCallback="@OnClickEditStavku"
                                  DeleteStavkuCallback="@OnClickDeleteStavku">
         </StavkaStruktureCeneList>
-
         <div>
             @foreach (var validation in PonudaViewModel.TekuciValidation)
             {
                 <p class="text-danger">@validation.ErrorMessage</p>
             }
-            <label>BrojRacuna</label>
-            <InputText @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
-            <label>Banka</label>
-            <InputSelect @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
-                @foreach (var banka in PonudaViewModel.Banke)
-                {
-                    <option value="@banka.Id">@banka.Ime</option>
-                }
-            </InputSelect>
+            <hr />
+            <h4 class="align-content-center">Tekuci racuni ponudjaca</h4>
+            <div class="row">
+
+                <div class="col">
+                    <label>BrojRacuna</label>
+                    <InputText class="form-control" @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.BrojRacuna></InputText>
+                </div>
+                <div class="col">
+                    <label>Banka</label>
+                    <InputSelect class="form-select" @bind-Value=PonudaViewModel.TekuciRacunPonudjaca.Banka.Id>
+                        @foreach (var banka in PonudaViewModel.Banke)
+                        {
+                            <option value="@banka.Id">@banka.Ime</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
         </div>
+        <hr />
         @if (!isEditTekuceg)
         {
-            <button type="button" class="btn" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
+            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.DodajTekuci">Dodaj</button>
         }
         else
         {
-            <button type="button" class="btn" @onclick="PonudaViewModel.AzurirajTekuci">Azuriraj</button>
+            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.AzurirajTekuci">Azuriraj</button>
         }
         <button type="button" class="btn btn-light" @onclick="OnChangeResetTekuci">Odustani</button>
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
@@ -117,14 +173,14 @@
 
         @if (!isDisabled)
         {
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Sacuvaj</button>
         }
 
     </EditForm>
 </fieldset>
 @if (isDisabled)
 {
-    <button type="button" @onclick="@(e=> isDisabled = false)">Edit</button>
+    <button type="button" class="btn btn-primary" @onclick="@(e=> isDisabled = false)">Azuriraj</button>
 }
 
 
@@ -167,7 +223,7 @@
     }
     private async Task UnesiPonudu()
     {
-        if(Id == Guid.Empty)
+        if (Id == Guid.Empty)
         {
             await PonudaViewModel.KreirajPonudu();
 
