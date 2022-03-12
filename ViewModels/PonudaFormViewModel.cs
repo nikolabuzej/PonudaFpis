@@ -55,6 +55,13 @@ namespace ViewModels
         }
         private List<ValidationResult> _stavkaValidation = Enumerable.Empty<ValidationResult>().ToList();
         private List<ValidationResult> _tekuciValidation = Enumerable.Empty<ValidationResult>().ToList();
+        private List<ValidationResult> _ponudaValidation = Enumerable.Empty<ValidationResult>().ToList();
+
+        public List<ValidationResult> PonudaValidation
+        {
+            get => _ponudaValidation;
+            set => SetValue(ref _ponudaValidation, value);
+        }
         public List<ValidationResult> StavkaValidation
         {
             get => _stavkaValidation;
@@ -86,16 +93,24 @@ namespace ViewModels
 
         public async Task OnInit(Guid id)
         {
-            if (id != Guid.Empty)
-            {
-                var ponuda = await VratiPonudu(id);
-                Ponuda = ponuda;
-            }
             JavniPozivi = (await _javniPozivService.VratiJavnePozive()).ToList();
             Ponudjaci = (await _ponudjacService.VratiPonudjace()).ToList();
             InformacijeOIsporuci = (await _informacijeOIsporuciService.VratiInformacijeOIsporuci()).ToList();
             Proizvodi = (await _proizvodService.VratiProizvode()).Data.ToList();
             Banke = (await _bankaService.VratiBanke()).ToList();
+            StavkaStruktureCene.Proizvod.Id = Proizvodi.FirstOrDefault().Id;
+            TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;
+            if (id != Guid.Empty)
+            {
+                var ponuda = await VratiPonudu(id);
+                Ponuda = ponuda;
+            }
+            else
+            {
+                Ponuda.Ponudjac.Id = Ponudjaci.FirstOrDefault().Id;
+                Ponuda.JavniPoziv.Id = JavniPozivi.FirstOrDefault().Id;
+                Ponuda.InformacijeOIsporuci.Id = InformacijeOIsporuci.FirstOrDefault().Id;
+            }
 
         }
         public async Task<Ponuda> VratiPonudu(Guid id)
@@ -111,6 +126,9 @@ namespace ViewModels
                 StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod?.Id);
 
                 Ponuda.StavkeStruktureCene.Add(StavkaStruktureCene);
+
+                StavkaStruktureCene = new();
+                StavkaStruktureCene.Proizvod.Id = Proizvodi.FirstOrDefault().Id;
             }
 
         }
@@ -120,6 +138,8 @@ namespace ViewModels
             {
                 TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
                 Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
+                TekuciRacunPonudjaca = new();
+                TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;
             }
         }
         public void AzurirajTekuci()
@@ -131,6 +151,9 @@ namespace ViewModels
                 Ponuda.AzurirajTekuciRacunPonudjaca(TekuciRacunPonudjaca.Id,
                     TekuciRacunPonudjaca.BrojRacuna,
                     TekuciRacunPonudjaca.Banka);
+
+                TekuciRacunPonudjaca = new();
+                TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;
             }
         }
         public void AzurirajStavku()
@@ -144,66 +167,76 @@ namespace ViewModels
                                                    StavkaStruktureCene.JedinicnaCenaBezPdv,
                                                    StavkaStruktureCene.JedinicnaCenaSaPdv,
                                                    StavkaStruktureCene.Proizvod);
+                StavkaStruktureCene = new();
+                StavkaStruktureCene.Proizvod.Id = Proizvodi.FirstOrDefault().Id;
+
             }
         }
 
         public async Task AzurirajPonudu()
         {
-            PonudaPayload payload = new()
+            if (Ponuda.IsValid(PonudaValidation))
             {
-                DatumPristizanja = Ponuda.DatumPristizanja,
-                ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
-                InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
-                JavniPozivId = Ponuda.JavniPoziv.Id,
-                Kontakt = Ponuda.Kontakt,
-                PonudjacId = Ponuda.Ponudjac.Id,
-                Status = Ponuda.Status,
-                StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                PonudaPayload payload = new()
                 {
-                    Id = s.Id,
-                    JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
-                    JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
-                    Kolicina = s.Kolicina,
-                    ProizvodId = s.Proizvod.Id
-                }).ToList(),
-                TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
-                {
-                    Id = t.Id,
-                    BankaId = t.Banka.Id,
-                    BrojRacuna = t.BrojRacuna
-                }).ToList()
-            };
+                    DatumPristizanja = Ponuda.DatumPristizanja,
+                    ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
+                    InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
+                    JavniPozivId = Ponuda.JavniPoziv.Id,
+                    Kontakt = Ponuda.Kontakt,
+                    PonudjacId = Ponuda.Ponudjac.Id,
+                    Status = Ponuda.Status,
+                    StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                    {
+                        Id = s.Id,
+                        JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
+                        JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
+                        Kolicina = s.Kolicina,
+                        ProizvodId = s.Proizvod.Id
+                    }).ToList(),
+                    TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
+                    {
+                        Id = t.Id,
+                        BankaId = t.Banka.Id,
+                        BrojRacuna = t.BrojRacuna
+                    }).ToList()
+                };
 
-            Ponuda = await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
+                Ponuda = await _ponudaService.AzurirajPonudu(Ponuda.Id, payload);
+            }
         }
         public async Task KreirajPonudu()
         {
-            PonudaPayload payload = new()
+            if (Ponuda.IsValid(PonudaValidation))
             {
-                DatumPristizanja = Ponuda.DatumPristizanja,
-                ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
-                InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
-                JavniPozivId = Ponuda.JavniPoziv.Id,
-                Kontakt = Ponuda.Kontakt,
-                PonudjacId = Ponuda.Ponudjac.Id,
-                Status = Ponuda.Status,
-                StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                PonudaPayload payload = new()
                 {
-                    Id = s.Id,
-                    JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
-                    JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
-                    Kolicina = s.Kolicina,
-                    ProizvodId = s.Proizvod.Id
-                }).ToList(),
-                TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
-                {
-                    Id = t.Id,
-                    BankaId = t.Banka.Id,
-                    BrojRacuna = t.BrojRacuna
-                }).ToList()
-            };
+                    DatumPristizanja = Ponuda.DatumPristizanja,
+                    ZakonskiZastupnik = Ponuda.ZakonskiZastupnik,
+                    InformacijeOIsporuciId = Ponuda.InformacijeOIsporuci.Id,
+                    JavniPozivId = Ponuda.JavniPoziv.Id,
+                    Kontakt = Ponuda.Kontakt,
+                    PonudjacId = Ponuda.Ponudjac.Id,
+                    Status = Ponuda.Status,
+                    StavkeStruktureCene = Ponuda.StavkeStruktureCene.Select(s => new StavkaStruktureCenePayload()
+                    {
+                        Id = s.Id,
+                        JedinicnaCenaBezPdv = s.JedinicnaCenaBezPdv,
+                        JedinicnaCenaSaPdv = s.JedinicnaCenaSaPdv,
+                        Kolicina = s.Kolicina,
+                        ProizvodId = s.Proizvod.Id
+                    }).ToList(),
+                    TekuciRacuniPonudjaca = Ponuda.TekuciRacuniPonudjaca.Select(t => new TekuciRacunPonudjacaPayload()
+                    {
+                        Id = t.Id,
+                        BankaId = t.Banka.Id,
+                        BrojRacuna = t.BrojRacuna
+                    }).ToList()
+                };
 
-            Ponuda = await _ponudaService.KreirajPonudu(payload);
+                Ponuda = await _ponudaService.KreirajPonudu(payload);
+            }
         }
+
     }
 }

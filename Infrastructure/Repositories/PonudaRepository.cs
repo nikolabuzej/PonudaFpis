@@ -47,7 +47,7 @@ namespace Infrastructure.Repositories
                   .Include(p => p.JavniPoziv)
                   .Include(p => p.InformacijeOIsporuci);
 
-           return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable, parameters.PageNumber,parameters.PageSize));
+            return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable, parameters.PageNumber, parameters.PageSize, parameters.SortProperty, parameters.SortOrder));
         }
 
         public Task<Ponuda> VratiPonudu(Guid id)

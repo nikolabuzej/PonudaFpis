@@ -9,7 +9,11 @@
 <fieldset disabled=@isDisabled>
     <EditForm Model="@PonudaViewModel.Ponuda" OnValidSubmit="@UnesiPonudu">
         <ObjectGraphDataAnnotationsValidator />
-        <ValidationSummary />
+        <ValidationSummary  />
+        @foreach (var validation in PonudaViewModel.PonudaValidation)
+            {
+                <p class="text-danger">@validation.ErrorMessage</p>
+            }
         <div class="row">
             <div class="col">
                 <label>Javni poziv</label>
@@ -101,7 +105,7 @@
             </div>
             <div class="col">
                 <label>Proizvod</label>
-                <InputSelect class="form-select" @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
+                <InputSelect class="form-select" @bind-Value="PonudaViewModel.StavkaStruktureCene.Proizvod.Id">
                     @foreach (var proizvod in PonudaViewModel.Proizvodi)
                     {
                         <option value="@proizvod.Id">@proizvod.Ime</option>
@@ -126,7 +130,7 @@
         }
         else
         {
-            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.AzurirajStavku">Azuriraj</button>
+            <button type="button" class="btn btn-info" @onclick="OnClickAzurirajStavku">Azuriraj</button>
         }
         <button type="button" class="btn btn-light" @onclick="OnChangeResetStakva">Odustani</button>
         <StavkaStruktureCeneList StavkeStruktureCene=@PonudaViewModel.Ponuda.StavkeStruktureCene.ToList()
@@ -164,7 +168,7 @@
         }
         else
         {
-            <button type="button" class="btn btn-info" @onclick="PonudaViewModel.AzurirajTekuci">Azuriraj</button>
+            <button type="button" class="btn btn-info" @onclick="OnClickAzurirajTekuci">Azuriraj</button>
         }
         <button type="button" class="btn btn-light" @onclick="OnChangeResetTekuci">Odustani</button>
         <TekuciRacunPonudjacaList TekuciRacuni=@PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.ToList()
@@ -212,6 +216,16 @@
         PonudaViewModel.TekuciRacunPonudjaca = PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.FirstOrDefault(t => t.Id == id);
         isEditTekuceg = true;
     }
+    private void OnClickAzurirajStavku()
+    {
+        PonudaViewModel.AzurirajStavku();
+        isEditStavke = false;
+    }
+    private void OnClickAzurirajTekuci()
+    {
+        PonudaViewModel.AzurirajTekuci();
+        isEditTekuceg = false;
+    }
     private void OnClickDeleteTekuci(Guid id)
     {
         PonudaViewModel.Ponuda.ObrisiTekuciRacunPonudjaca(id);
@@ -232,7 +246,10 @@
         {
             await PonudaViewModel.AzurirajPonudu();
         }
-        NavigationManager.NavigateTo("ponuda");
+        if (!PonudaViewModel.PonudaValidation.Any())
+        {
+            NavigationManager.NavigateTo("ponuda"); 
+        }
     }
     private void OnChangeResetTekuci()
     {

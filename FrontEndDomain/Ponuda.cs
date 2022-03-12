@@ -38,12 +38,12 @@ namespace FrontEnd.FrontEndDomain
         [Required]
         public DateTime DatumPristizanja { get; set; } = DateTime.Now;
         [Required]
-        public string ZakonskiZastupnik { get;set; } = string.Empty;
+        public string ZakonskiZastupnik { get; set; } = string.Empty;
         [Required]
-        public StatusPonude Status { get;  set; }
-        public JavniPoziv JavniPoziv { get;  set; } = new();
-        public Ponudjac Ponudjac { get;  set; } = new();
-        public InformacijeOIsporuci InformacijeOIsporuci { get;  set; } = new();
+        public StatusPonude Status { get; set; }
+        public JavniPoziv JavniPoziv { get; set; } = new();
+        public Ponudjac Ponudjac { get; set; } = new();
+        public InformacijeOIsporuci InformacijeOIsporuci { get; set; } = new();
 
         public List<StavkaStruktureCene> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCene>().ToList();
         public List<TekuciRacunPonudjaca> TekuciRacuniPonudjaca { get; set; } = Enumerable.Empty<TekuciRacunPonudjaca>().ToList();
@@ -71,7 +71,8 @@ namespace FrontEnd.FrontEndDomain
             stavka.Kolicina = kolicina;
             stavka.JedinicnaCenaBezPdv = jedinicnaCenaBezPdv;
             stavka.JedinicnaCenaSaPdv = jedinicnaCenaSaPdv;
-            stavka.Proizvod = proizvod;
+            stavka.Proizvod.Id = proizvod.Id;
+            stavka.Proizvod.Ime = proizvod.Ime;
 
         }
         public void DodajStavkuStruktureCene(int kolicina, double jedinicnaCenaBezPdv, double jedinicnaCenaSaPdv, Proizvod proizvod)
@@ -83,7 +84,7 @@ namespace FrontEnd.FrontEndDomain
                 JedinicnaCenaBezPdv = jedinicnaCenaBezPdv,
                 JedinicnaCenaSaPdv = jedinicnaCenaSaPdv,
                 Proizvod = proizvod
-            }) ;
+            });
         }
         public void DodajTekuciRacunPonudjaca(string brojRacuna, Banka banka)
         {
@@ -97,7 +98,8 @@ namespace FrontEnd.FrontEndDomain
         public void AzurirajTekuciRacunPonudjaca(Guid id, string brojRacuna, Banka banka)
         {
             TekuciRacunPonudjaca tekuci = TekuciRacuniPonudjaca.First(t => t.Id == id);
-            tekuci.Banka = banka;
+            tekuci.Banka.Id = banka.Id;
+            tekuci.Banka.Ime = banka.Ime;
             tekuci.BrojRacuna = brojRacuna;
         }
         public void ObrisiStavkuStruktureCene(Guid id)
@@ -112,6 +114,14 @@ namespace FrontEnd.FrontEndDomain
             TekuciRacunPonudjaca racun = TekuciRacuniPonudjaca.First(x => x.Id == id);
 
             TekuciRacuniPonudjaca.Remove(racun);
+        }
+
+        public bool IsValid(List<ValidationResult> results)
+        {
+            this.Validate(results);
+            this.Kontakt.Validate(results);
+
+            return !results.Any();
         }
     }
 }
