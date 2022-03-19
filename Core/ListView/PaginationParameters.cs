@@ -10,6 +10,7 @@ namespace Core.ListView
         private int _pageSize = 10;
         public SortOrder SortOrder { get; set; } = SortOrder.asc;
         public SortProperty SortProperty { get; set; } = SortProperty.DatumPristizanja;
+        public string SearchText { get; set; } = string.Empty;
         public int PageSize
         {
             get

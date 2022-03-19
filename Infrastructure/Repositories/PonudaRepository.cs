@@ -45,7 +45,13 @@ namespace Infrastructure.Repositories
                       .ThenInclude(s => s.Proizvod)
                   .Include(p => p.Ponudjac)
                   .Include(p => p.JavniPoziv)
-                  .Include(p => p.InformacijeOIsporuci);
+                  .Include(p => p.InformacijeOIsporuci)
+                  .Where(p => p.Kontakt.Ime.Contains(parameters.SearchText)
+                  || p.Kontakt.Prezime.Contains(parameters.SearchText)
+                  || p.Ponudjac.Ime.Contains(parameters.SearchText)
+                  || p.JavniPoziv.Ime.Contains(parameters.SearchText)
+                  || p.InformacijeOIsporuci.Ime.Contains(parameters.SearchText));
+
 
             return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable,
                                                                 parameters.PageNumber,
