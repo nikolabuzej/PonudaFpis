@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace PonudaFpis.Validation
 {
-    public class KreirajPonuduValidacija: AbstractValidator<PonudaDto>
+    public class KreirajPonuduValidacija : AbstractValidator<PonudaDto>
     {
         public KreirajPonuduValidacija()
         {
@@ -25,8 +25,8 @@ namespace PonudaFpis.Validation
 
             this.RuleForEach(p => p.StavkeStruktureCene).ChildRules(s =>
             {
-                s.RuleFor(s => s.JedinicnaCenaSaPdv).GreaterThan(1);
-                s.RuleFor(s => s.JedinicnaCenaBezPdv).GreaterThan(1);
+                s.RuleFor(s => s.JedinicnaCenaSaPdv).GreaterThanOrEqualTo(1);
+                s.RuleFor(s => s.JedinicnaCenaBezPdv).GreaterThanOrEqualTo(1);
                 s.RuleFor(s => s.Kolicina).GreaterThanOrEqualTo(1);
                 s.RuleFor(s => s.ProizvodId).NotNull().NotEmpty();
             });
