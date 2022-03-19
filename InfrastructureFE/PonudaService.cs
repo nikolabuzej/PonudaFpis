@@ -29,6 +29,11 @@ namespace InfrastructureFE
             return (await HttpUtilities.Deserialize<Ponuda>(response));
         }
 
+        public async Task ObrisiPonudu(Guid id)
+        {
+            _ = (await _httpClient.DeleteAsync($"{UrlStrings.PonudaUrl}/{id}")).EnsureSuccessStatusCode();
+        }
+
         public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1,
                                                              int pageSize = 2,
                                                              SortProperty sortProperty = SortProperty.DatumPristizanja,

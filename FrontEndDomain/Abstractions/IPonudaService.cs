@@ -14,5 +14,6 @@ namespace FrontEndDomain.Abstractions
         public Task<Ponuda> VratiPonudu(Guid id);
         public Task<Ponuda> AzurirajPonudu(Guid id, PonudaPayload payload);
         public Task<Ponuda> KreirajPonudu(PonudaPayload payload);
+        public Task ObrisiPonudu(Guid id);
     }
 }

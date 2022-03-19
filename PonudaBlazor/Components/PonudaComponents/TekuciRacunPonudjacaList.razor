@@ -15,7 +15,7 @@
             <tr>
                 <td>@tekuci.BrojRacuna</td>
                 <td>@tekuci.Banka.Ime</td>
-                <td><span class="oi oi-pencil" aria-hidden="true" @onclick="()=> OnClickEditTekuci(tekuci.Id)"></span></td>
+                <td><span class="oi oi-pencil" aria-hidden="true" @onclick="()=> OnClickEditTekuci(tekuci)"></span></td>
                 <td><span class="oi oi-trash" aria-hidden="true" @onclick="()=> OnClickDeleteTekuci(tekuci.Id)"></span></td>
             </tr>
         }
@@ -26,13 +26,13 @@
     [Parameter]
     public List<TekuciRacunPonudjaca> TekuciRacuni { get; set; } = Enumerable.Empty<TekuciRacunPonudjaca>().ToList();
     [Parameter]
-    public EventCallback<Guid>  EditTekuciCallback { get; set; }
+    public EventCallback<TekuciRacunPonudjaca>  EditTekuciCallback { get; set; }
     [Parameter]
     public EventCallback<Guid> DeleteTekuciCallback { get; set; }
 
-    private async Task OnClickEditTekuci(Guid id)
+    private async Task OnClickEditTekuci(TekuciRacunPonudjaca tekuci)
     {
-        await EditTekuciCallback.InvokeAsync(id);
+        await EditTekuciCallback.InvokeAsync(tekuci);
     }
     private async Task OnClickDeleteTekuci(Guid id)
     {

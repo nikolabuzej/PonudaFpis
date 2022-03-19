@@ -46,7 +46,8 @@
         </select>
     </div>
 </div>
-<PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
+<PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBackExpand="@OnClickExpand"
+OnClickCAllBackDelete=@OnClickDelete></PonudaLista>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
         <li class="page-item">
@@ -90,13 +91,18 @@
 
         await PonudaViewModel.PromeniPageSize(size);
     }
-  
+
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit();
     }
-    private void OnClick(Guid id)
+    private void OnClickExpand(Guid id)
     {
         NavigationManager.NavigateTo($"ponuda/{id}");
+    }
+
+    private async  Task OnClickDelete(Guid id)
+    {
+        await PonudaViewModel.ObrisiPonudu(id);
     }
 }

@@ -22,7 +22,8 @@ else
                 <td>@ponuda.Status</td>
                 <td>@ponuda.DatumPristizanja</td>
                 <td>@ponuda.ZakonskiZastupnik</td>
-                <td><span class="oi oi-external-link" @onclick="() => PassBack(ponuda.Id)"></span></td>
+                <td><span class="oi oi-external-link" @onclick="() => PassBackExpand(ponuda.Id)"></span></td>
+                <td><span class="oi oi-trash" @onclick="() => PassBackDelete(ponuda.Id)"></span></td>
             </tr>
         }
     </tbody>
@@ -36,11 +37,16 @@ else
     public List<Ponuda> Ponude { get; set; } = Enumerable.Empty<Ponuda>().ToList();
 
     [Parameter]
-    public EventCallback<Guid> OnClickCallBack { get; set; }
-
-    private async Task PassBack(Guid id)
+    public EventCallback<Guid> OnClickCallBackExpand { get; set; }
+    [Parameter]
+    public EventCallback<Guid> OnClickCAllBackDelete { get; set; }
+    private async Task PassBackExpand(Guid id)
     {
-       await OnClickCallBack.InvokeAsync(id);
+        await OnClickCallBackExpand.InvokeAsync(id);
+    }
+    private async Task PassBackDelete(Guid id)
+    {
+        await OnClickCAllBackDelete.InvokeAsync(id);
     }
 
 }

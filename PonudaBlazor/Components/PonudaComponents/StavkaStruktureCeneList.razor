@@ -18,7 +18,7 @@
                 <td>@stavka.Proizvod.Ime</td>
                 <td>@stavka.JedinicnaCenaBezPdv</td>
                 <td>@stavka.JedinicnaCenaSaPdv</td>
-                <td><span class="oi oi-pencil" aria-hidden="true" @onclick="()=> EditStavku(stavka.Id)"></span></td>
+                <td><span class="oi oi-pencil" aria-hidden="true" @onclick="()=> EditStavku(stavka)"></span></td>
                 <td><span class="oi oi-trash" aria-hidden="true" @onclick="()=> DeleteStavku(stavka.Id)"></span></td>
             </tr>
         }
@@ -30,7 +30,7 @@
     [Parameter]
     public List<StavkaStruktureCene> StavkeStruktureCene { get; set; } = Enumerable.Empty<StavkaStruktureCene>().ToList();
     [Parameter]
-    public EventCallback<Guid> EditStavkuCallback { get; set; }
+    public EventCallback<StavkaStruktureCene> EditStavkuCallback { get; set; }
 
     [Parameter]
     public EventCallback<Guid> DeleteStavkuCallback { get; set; }
@@ -40,8 +40,8 @@
         await DeleteStavkuCallback.InvokeAsync(id);
     }
 
-    private async Task EditStavku(Guid id)
+    private async Task EditStavku(StavkaStruktureCene stavka)
     {
-        await EditStavkuCallback.InvokeAsync(id);
+        await EditStavkuCallback.InvokeAsync(stavka);
     }
 }

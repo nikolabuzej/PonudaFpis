@@ -101,6 +101,15 @@ namespace ViewModels
                                             Ponude.Pagination.SortOrder,
                                             Ponude.Pagination.SearchText);
         }
+        public async Task ObrisiPonudu(Guid id)
+        {
+            await _ponudaService.ObrisiPonudu(id);
+            Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
+                                             Ponude.Pagination.PageSize,
+                                             Ponude.Pagination.SortProperty,
+                                             Ponude.Pagination.SortOrder,
+                                             Ponude.Pagination.SearchText);
+        }
         private async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber,
                                                              int pageSize,
                                                              SortProperty sortProperty = SortProperty.DatumPristizanja,

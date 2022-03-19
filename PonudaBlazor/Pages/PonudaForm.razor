@@ -105,7 +105,7 @@
             </div>
             <div class="col">
                 <label>Proizvod</label>
-                <InputSelect class="form-select" @bind-Value="PonudaViewModel.StavkaStruktureCene.Proizvod.Id">
+                <InputSelect class="form-select" @bind-Value=PonudaViewModel.StavkaStruktureCene.Proizvod.Id>
                     @foreach (var proizvod in PonudaViewModel.Proizvodi)
                     {
                         <option value="@proizvod.Id">@proizvod.Ime</option>
@@ -202,18 +202,18 @@
         await PonudaViewModel.OnInit(Id);
     }
 
-    private void OnClickEditStavku(Guid id)
+    private void OnClickEditStavku(StavkaStruktureCene stavkaStruktureCene)
     {
-        PonudaViewModel.StavkaStruktureCene = PonudaViewModel.Ponuda.StavkeStruktureCene.FirstOrDefault(s => s.Id == id);
+        PonudaViewModel.StavkaStruktureCene = stavkaStruktureCene;
         isEditStavke = true;
     }
     private void OnClickDeleteStavku(Guid id)
     {
         PonudaViewModel.Ponuda.ObrisiStavkuStruktureCene(id);
     }
-    private void OnClickEditTekuci(Guid id)
+    private void OnClickEditTekuci(TekuciRacunPonudjaca tekuci)
     {
-        PonudaViewModel.TekuciRacunPonudjaca = PonudaViewModel.Ponuda.TekuciRacuniPonudjaca.FirstOrDefault(t => t.Id == id);
+        PonudaViewModel.TekuciRacunPonudjaca = tekuci;
         isEditTekuceg = true;
     }
     private void OnClickAzurirajStavku()

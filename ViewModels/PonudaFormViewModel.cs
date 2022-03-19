@@ -123,8 +123,10 @@ namespace ViewModels
         {
             if (StavkaStruktureCene.IsValid(StavkaValidation))
             {
-                StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod?.Id);
+                var proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod?.Id);
 
+                StavkaStruktureCene.Proizvod.Id = proizvod.Id;
+                StavkaStruktureCene.Proizvod.Ime = proizvod.Ime;
                 Ponuda.StavkeStruktureCene.Add(StavkaStruktureCene);
 
                 StavkaStruktureCene = new();
@@ -136,7 +138,9 @@ namespace ViewModels
         {
             if (TekuciRacunPonudjaca.IsValid(TekuciValidation))
             {
-                TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+                var banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+                TekuciRacunPonudjaca.Banka.Id = banka.Id;
+                TekuciRacunPonudjaca.Banka.Ime = banka.Ime;
                 Ponuda.TekuciRacuniPonudjaca.Add(TekuciRacunPonudjaca);
                 TekuciRacunPonudjaca = new();
                 TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;
@@ -146,11 +150,9 @@ namespace ViewModels
         {
             if (TekuciRacunPonudjaca.Validate(TekuciValidation))
             {
-                TekuciRacunPonudjaca.Banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
-
-                Ponuda.AzurirajTekuciRacunPonudjaca(TekuciRacunPonudjaca.Id,
-                    TekuciRacunPonudjaca.BrojRacuna,
-                    TekuciRacunPonudjaca.Banka);
+                var banka = Banke.FirstOrDefault(b => b.Id == TekuciRacunPonudjaca.Banka.Id);
+                TekuciRacunPonudjaca.Banka.Id = banka.Id;
+                TekuciRacunPonudjaca.Banka.Ime = banka.Ime;
 
                 TekuciRacunPonudjaca = new();
                 TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;
@@ -160,13 +162,10 @@ namespace ViewModels
         {
             if (StavkaStruktureCene.Validate(StavkaValidation))
             {
-                StavkaStruktureCene.Proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
+                var proizvod = Proizvodi.FirstOrDefault(p => p.Id == StavkaStruktureCene.Proizvod.Id);
 
-                Ponuda.AzurirajStavkuStruktureCene(StavkaStruktureCene.Id,
-                                                   StavkaStruktureCene.Kolicina,
-                                                   StavkaStruktureCene.JedinicnaCenaBezPdv,
-                                                   StavkaStruktureCene.JedinicnaCenaSaPdv,
-                                                   StavkaStruktureCene.Proizvod);
+                StavkaStruktureCene.Proizvod.Id = proizvod.Id;
+                StavkaStruktureCene.Proizvod.Ime = proizvod.Ime;
                 StavkaStruktureCene = new();
                 StavkaStruktureCene.Proizvod.Id = Proizvodi.FirstOrDefault().Id;
 
