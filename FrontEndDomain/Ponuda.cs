@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FrontEnd.FrontEndDomain
 {
-    public enum StatusPonude { URazmatranju, Prihvacena, Odbijena };
+    public enum StatusPonude { Pristigla, Aktivna, Obradjena };
     public class Ponuda
     {
         public Ponuda(Kontakt kontakt,

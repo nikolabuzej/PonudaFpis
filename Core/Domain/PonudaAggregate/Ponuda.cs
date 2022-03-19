@@ -7,7 +7,7 @@ using Core.Extensions;
 
 namespace Core.Domain.PonudaAggregate
 {
-    public enum StatusPonude { URazmatranju, Prihvacena, Odbijena };
+    public enum StatusPonude { Pristigla, Aktivna, Obradjena };
     public class Ponuda
     {
         public Ponuda(Kontakt kontakt,
@@ -85,7 +85,7 @@ namespace Core.Domain.PonudaAggregate
                 JedinicnaCenaBezPdv = jedinicnaCenaBezPdv,
                 JedinicnaCenaSaPdv = jedinicnaCenaSaPdv,
                 Proizvod = proizvod
-            }) ;
+            });
         }
         public void DodajTekuciRacunPonudjaca(string brojRacuna, Banka banka)
         {
