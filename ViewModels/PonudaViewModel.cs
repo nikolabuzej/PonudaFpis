@@ -25,30 +25,54 @@ namespace ViewModels
 
             Ponude = ponude;
         }
+        public async Task Pretrazi()
+        {
+            Ponude = await this.VratiPonude(1,
+                Ponude.Pagination.PageSize,
+                Ponude.Pagination.SortProperty,
+                Ponude.Pagination.SortOrder,
+                Ponude.Pagination.SearchText
+                );
+        }
         public async Task NextPage()
         {
-            Ponude = await this.VratiPonude(Ponude.Pagination.NextPage, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(Ponude.Pagination.NextPage,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText
+                                            );
         }
         public async Task PrevoiusPage()
         {
-            Ponude = await this.VratiPonude(Ponude.Pagination.PreviousPage, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(Ponude.Pagination.PreviousPage,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText
+                                            );
         }
         public async Task LastPage()
         {
-            Ponude = await this.VratiPonude(Ponude.Pagination.TotalPages, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(Ponude.Pagination.TotalPages,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText
+                                            );
         }
 
         public async Task NavigateToPage(int pageNumber)
         {
-            Ponude = await this.VratiPonude(pageNumber, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(pageNumber,
+                Ponude.Pagination.PageSize,
+                Ponude.Pagination.SortProperty,
+                Ponude.Pagination.SortOrder,
+                Ponude.Pagination.SearchText);
         }
         public List<int> CreateSpread()
         {
             return Enumerable.Range(1, Ponude.Pagination.TotalPages).ToList();
-        }
-        public string GetPageStatus()
-        {
-            return $"{Ponude.Pagination.CurrentPage}/{Ponude.Pagination.TotalPages}";
         }
         public async Task PromeniSortProperty(SortProperty sortProperty)
         {
@@ -56,7 +80,8 @@ namespace ViewModels
             Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
                                             Ponude.Pagination.PageSize,
                                             Ponude.Pagination.SortProperty,
-                                            Ponude.Pagination.SortOrder);
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText);
         }
         public async Task PromeniSortOrder(SortOrder sortOrder)
         {
@@ -64,7 +89,8 @@ namespace ViewModels
             Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
                                             Ponude.Pagination.PageSize,
                                             Ponude.Pagination.SortProperty,
-                                            Ponude.Pagination.SortOrder);
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText);
         }
         public async Task PromeniPageSize(int pageSize)
         {
@@ -72,14 +98,16 @@ namespace ViewModels
             Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
                                             Ponude.Pagination.PageSize,
                                             Ponude.Pagination.SortProperty,
-                                            Ponude.Pagination.SortOrder);
+                                            Ponude.Pagination.SortOrder,
+                                            Ponude.Pagination.SearchText);
         }
         private async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber,
                                                              int pageSize,
                                                              SortProperty sortProperty = SortProperty.DatumPristizanja,
-                                                             SortOrder sortOrder = SortOrder.desc)
+                                                             SortOrder sortOrder = SortOrder.asc,
+                                                             string search = "")
         {
-            ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize, sortProperty, sortOrder);
+            ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize, sortProperty, sortOrder, search);
 
             return ponude;
         }

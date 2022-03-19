@@ -2,7 +2,7 @@
 {
     public static class ExtensionMethods
     {
-        public static  async Task<T> EnsureExists<T>(this Task<T> entity) where T : class
+        public static async Task<T> EnsureExists<T>(this Task<T> entity) where T : class
         {
             return (await entity).EnsureExists();
         }

@@ -7,7 +7,8 @@
                                int pageSize,
                                int totalCount,
                                SortProperty sortProperty,
-                               SortOrder sortOrder)
+                               SortOrder sortOrder,
+                               string searchText)
         {
             CurrentPage = currentPage;
             TotalPages = totalPages;
@@ -15,6 +16,7 @@
             TotalCount = totalCount;
             SortOrder = sortOrder;
             SortProperty = sortProperty;
+            SearchText = searchText ?? string.Empty;
         }
         public PaginationModel()
         {
@@ -26,6 +28,7 @@
         public int TotalPages { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public int TotalCount { get; set; }
+        public string SearchText { get; set; } = string.Empty;
         public SortProperty SortProperty { get; set; }
         public SortOrder SortOrder { get; set; }
     }

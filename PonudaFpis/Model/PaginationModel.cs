@@ -5,7 +5,8 @@ namespace PonudaFpis.Model
 {
     public class PaginationModel
     {
-        public PaginationModel(int currentPage, int totalPages, int pageSize, int totalCount, SortProperty sortProperty, SortOrder sortOrder)
+        public PaginationModel(int currentPage, int totalPages, int pageSize, int totalCount, SortProperty sortProperty, SortOrder sortOrder,
+            string searchText)
         {
             CurrentPage = currentPage;
             TotalPages = totalPages;
@@ -13,6 +14,7 @@ namespace PonudaFpis.Model
             TotalCount = totalCount;
             SortProperty = sortProperty;
             SortOrder = sortOrder;
+            SearchText = searchText;
         }
         public PaginationModel()
         {
@@ -24,5 +26,6 @@ namespace PonudaFpis.Model
         public int TotalCount { get; private set; }
         public SortProperty SortProperty { get; private set; }
         public SortOrder SortOrder { get; private set; }
+        public string SearchText { get; private set; } = string.Empty;
     }
 }

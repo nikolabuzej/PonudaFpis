@@ -9,7 +9,8 @@ namespace FrontEndDomain.Abstractions
         public Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1,
                                                        int pageSize = 2,
                                                        SortProperty sortProperty = SortProperty.DatumPristizanja,
-                                                       SortOrder sortOrder = SortOrder.desc);
+                                                       SortOrder sortOrder = SortOrder.desc,
+                                                       string SearchText = "");
         public Task<Ponuda> VratiPonudu(Guid id);
         public Task<Ponuda> AzurirajPonudu(Guid id, PonudaPayload payload);
         public Task<Ponuda> KreirajPonudu(PonudaPayload payload);

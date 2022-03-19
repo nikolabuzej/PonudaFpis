@@ -1,7 +1,4 @@
-﻿using Core.Extensions;
-using Core.ListView.Ponuda;
-using System.Reflection;
-
+﻿using Core.Abrstractions.Filter;
 namespace Core.ListView
 {
     public class ListView<T> : List<T> where T : class
@@ -24,30 +21,24 @@ namespace Core.ListView
         {
 
         }
-        public static ListView<T> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize, SortProperty sortProperty, SortOrder sortOrder)
+        public static ListView<T> ToPagedList(IQueryable<T> source, int pageNumber, int pageSize, Filter<T> sortProperty, SortOrder sortOrder)
         {
             int count = source.Count();
-            IQueryable<T> query = source.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
-            List<T> items = query.ToList();
-            if (sortOrder == SortOrder.asc)
+            if (sortOrder == SortOrder.desc)
             {
-                items = items.OrderBy(x => GetPropertyInfo(sortProperty.ToString()).GetValue(x, null)).ToList();
+                source = source.OrderByDescending(sortProperty.ToExpression()).
+                    Skip((pageNumber - 1) * pageSize).Take(pageSize);
             }
             else
             {
-                items = items.OrderByDescending(x => GetPropertyInfo(sortProperty.ToString()).GetValue(x, null)).ToList();
+                source = source.OrderBy(sortProperty.ToExpression()).
+                    Skip((pageNumber - 1) * pageSize).Take(pageSize);
             }
 
 
-            return new ListView<T>(items, count, pageNumber, pageSize);
+            return new ListView<T>(source.ToList(), count, pageNumber, pageSize);
         }
 
-        private static PropertyInfo GetPropertyInfo(string sortProperty)
-        {
-            var property = typeof(T).GetProperty(sortProperty).EnsureExists();
-
-            return property;
-        }
     }
 }

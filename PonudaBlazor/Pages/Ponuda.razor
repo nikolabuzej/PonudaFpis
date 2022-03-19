@@ -7,6 +7,16 @@
 @inject NavigationManager NavigationManager;
 
 
+
+ <EditForm class="row"  Model=@PonudaViewModel.Ponude.Pagination OnValidSubmit=@PonudaViewModel.Pretrazi>
+        <div class="col-10">
+            <InputText class="form-control" @bind-Value=@PonudaViewModel.Ponude.Pagination.SearchText>Tekst pretrage</InputText>
+        </div>
+        <div class="col-2">
+        <button type="submit" class="btn btn-primary">Pretrazi</button>
+        </div>
+    </EditForm>
+
 <div class="row">
     <div class="col">
         <label>Sortiraj po</label>
@@ -80,6 +90,7 @@
 
         await PonudaViewModel.PromeniPageSize(size);
     }
+  
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit();

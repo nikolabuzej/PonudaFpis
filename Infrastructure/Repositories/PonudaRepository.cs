@@ -1,6 +1,7 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.PonudaAggregate;
 using Core.Domain.PonudaAggregate.Repositories;
+using Core.Extensions;
 using Core.ListView;
 using Microsoft.EntityFrameworkCore;
 
@@ -56,7 +57,7 @@ namespace Infrastructure.Repositories
             return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable,
                                                                 parameters.PageNumber,
                                                                 parameters.PageSize,
-                                                                parameters.SortProperty,
+                                                                parameters.SortProperty.GetFilter(),
                                                                 parameters.SortOrder));
         }
 
