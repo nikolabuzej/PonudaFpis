@@ -1,12 +1,11 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
-using FrontEndDomain.ListViewConfiguration;
 
 namespace ViewModels
 {
     public class ProizvodViewModel : BaseViewModel
     {
-        private ListViewModel<Proizvod> _proizvodi = new();
+        private List<Proizvod> _proizvodi = new();
         private readonly IProizvodService _proizvodService;
 
         public ProizvodViewModel(IProizvodService proizvodService)
@@ -14,7 +13,7 @@ namespace ViewModels
             _proizvodService = proizvodService;
         }
 
-        public ListViewModel<Proizvod> Proizvodi
+        public List<Proizvod> Proizvodi
         {
             get => _proizvodi;
             set
@@ -27,9 +26,9 @@ namespace ViewModels
         {
             var proizvodi = await this.VratiProizvode();
 
-            Proizvodi = proizvodi;
+            Proizvodi = proizvodi.ToList();
         }
-        public async Task<ListViewModel<Proizvod>> VratiProizvode()
+        public async Task<IEnumerable<Proizvod>> VratiProizvode()
         {
             var response = await _proizvodService.VratiProizvode();
 

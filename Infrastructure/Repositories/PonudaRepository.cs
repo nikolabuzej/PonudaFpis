@@ -41,13 +41,17 @@ namespace Infrastructure.Repositories
             IQueryable<Ponuda> queryable = _context.Set<Ponuda>()
                   .Include(p => p.TekuciRacuniPonudjaca)
                       .ThenInclude(t => t.Banka)
-                      .Include(p => p.StavkeStruktureCene)
+                  .Include(p => p.StavkeStruktureCene)
                       .ThenInclude(s => s.Proizvod)
                   .Include(p => p.Ponudjac)
                   .Include(p => p.JavniPoziv)
                   .Include(p => p.InformacijeOIsporuci);
 
-            return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable, parameters.PageNumber, parameters.PageSize, parameters.SortProperty, parameters.SortOrder));
+            return Task.FromResult(ListView<Ponuda>.ToPagedList(queryable,
+                                                                parameters.PageNumber,
+                                                                parameters.PageSize,
+                                                                parameters.SortProperty,
+                                                                parameters.SortOrder));
         }
 
         public Task<Ponuda> VratiPonudu(Guid id)

@@ -1,6 +1,5 @@
 ﻿using FrontEnd.FrontEndDomain;
 using FrontEndDomain.Abstractions;
-using FrontEndDomain.ListViewConfiguration;
 
 namespace InfrastructureFE
 {
@@ -13,11 +12,11 @@ namespace InfrastructureFE
             _httpClient = httpClient;
         }
 
-        public async Task<ListViewModel<Proizvod>> VratiProizvode()
+        public async Task<IEnumerable<Proizvod>> VratiProizvode()
         {
-            var httpResponse = await _httpClient.GetAsync(UrlStrings.ProizvodUrl);
+            HttpResponseMessage httpResponse = await _httpClient.GetAsync(UrlStrings.ProizvodUrl);
 
-            var reponse = await HttpUtilities.Deserialize<ListViewModel<Proizvod>>(httpResponse);
+            IEnumerable<Proizvod> reponse = await HttpUtilities.Deserialize<IEnumerable<Proizvod>>(httpResponse);
 
             return reponse;
         }

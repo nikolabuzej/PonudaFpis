@@ -1,10 +1,41 @@
 ﻿@page "/ponuda"
+@using FrontEndDomain.ListViewConfiguration
 @using InfrastructureFE
 @using PonudaBlazor.Components.PonudaComponents
 @using ViewModels
 @inject PonudaViewModel PonudaViewModel;
 @inject NavigationManager NavigationManager;
 
+
+<div class="row">
+    <div class="col">
+        <label>Sortiraj po</label>
+        <select class="form-select" @onchange=@ChangeSortProperty>
+            @foreach (var prop in Enum.GetValues(typeof(SortProperty)).Cast<SortProperty>())
+            {
+                <option value="@prop">@prop.ToString()</option>
+            }
+        </select>
+    </div>
+    <div class="col">
+        <label>Smer</label>
+        <select class="form-select" @onchange=@ChangeSortOrder>
+            @foreach (var prop in Enum.GetValues(typeof(SortOrder)).Cast<SortOrder>())
+            {
+                <option value="@prop">@prop.ToString()</option>
+            }
+        </select>
+    </div>
+    <div class="col">
+        <label>Broj ponuda</label>
+        <select class="form-select" @onchange=@ChangePageSize>
+            @foreach (int size in Enumerable.Range(1, 3).Select(i => i * 2))
+            {
+                <option value="@size">@size.ToString()</option>
+            }
+        </select>
+    </div>
+</div>
 <PonudaLista Ponude="@PonudaViewModel.Ponude.Data" OnClickCallBack="@OnClick"></PonudaLista>
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">
@@ -33,6 +64,22 @@
 </nav>
 @code
 {
+    private async Task ChangeSortProperty(ChangeEventArgs args)
+    {
+        Enum.TryParse(args.Value?.ToString(), out SortProperty value);
+        await PonudaViewModel.PromeniSortProperty(value);
+    }
+    private async Task ChangeSortOrder(ChangeEventArgs args)
+    {
+        Enum.TryParse(args.Value?.ToString(), out SortOrder value);
+        await PonudaViewModel.PromeniSortOrder(value);
+    }
+    private async Task ChangePageSize(ChangeEventArgs args)
+    {
+        int.TryParse(args.Value?.ToString(), out int size);
+
+        await PonudaViewModel.PromeniPageSize(size);
+    }
     protected override async Task OnInitializedAsync()
     {
         await PonudaViewModel.OnInit();

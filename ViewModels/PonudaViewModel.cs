@@ -21,23 +21,23 @@ namespace ViewModels
         }
         public async Task OnInit()
         {
-            var ponude = await this.VratiPonude(1, 1);
+            var ponude = await this.VratiPonude(1, 2);
 
             Ponude = ponude;
         }
         public async Task NextPage()
         {
-           Ponude = await this.VratiPonude(Ponude.Pagination.NextPage, Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(Ponude.Pagination.NextPage, Ponude.Pagination.PageSize);
         }
         public async Task PrevoiusPage()
         {
-           Ponude = await this.VratiPonude(Ponude.Pagination.PreviousPage,Ponude.Pagination.PageSize);
+            Ponude = await this.VratiPonude(Ponude.Pagination.PreviousPage, Ponude.Pagination.PageSize);
         }
         public async Task LastPage()
         {
             Ponude = await this.VratiPonude(Ponude.Pagination.TotalPages, Ponude.Pagination.PageSize);
         }
-       
+
         public async Task NavigateToPage(int pageNumber)
         {
             Ponude = await this.VratiPonude(pageNumber, Ponude.Pagination.PageSize);
@@ -50,10 +50,36 @@ namespace ViewModels
         {
             return $"{Ponude.Pagination.CurrentPage}/{Ponude.Pagination.TotalPages}";
         }
-
-        public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber, int pageSize)
+        public async Task PromeniSortProperty(SortProperty sortProperty)
         {
-            ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize);
+            Ponude.Pagination.SortProperty = sortProperty;
+            Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder);
+        }
+        public async Task PromeniSortOrder(SortOrder sortOrder)
+        {
+            Ponude.Pagination.SortOrder = sortOrder;
+            Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder);
+        }
+        public async Task PromeniPageSize(int pageSize)
+        {
+            Ponude.Pagination.PageSize = pageSize;
+            Ponude = await this.VratiPonude(Ponude.Pagination.CurrentPage,
+                                            Ponude.Pagination.PageSize,
+                                            Ponude.Pagination.SortProperty,
+                                            Ponude.Pagination.SortOrder);
+        }
+        private async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber,
+                                                             int pageSize,
+                                                             SortProperty sortProperty = SortProperty.DatumPristizanja,
+                                                             SortOrder sortOrder = SortOrder.desc)
+        {
+            ListViewModel<Ponuda> ponude = await _ponudaService.VratiPonude(pageNumber, pageSize, sortProperty, sortOrder);
 
             return ponude;
         }

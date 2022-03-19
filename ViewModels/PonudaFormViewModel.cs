@@ -96,7 +96,7 @@ namespace ViewModels
             JavniPozivi = (await _javniPozivService.VratiJavnePozive()).ToList();
             Ponudjaci = (await _ponudjacService.VratiPonudjace()).ToList();
             InformacijeOIsporuci = (await _informacijeOIsporuciService.VratiInformacijeOIsporuci()).ToList();
-            Proizvodi = (await _proizvodService.VratiProizvode()).Data.ToList();
+            Proizvodi = (await _proizvodService.VratiProizvode()).ToList();
             Banke = (await _bankaService.VratiBanke()).ToList();
             StavkaStruktureCene.Proizvod.Id = Proizvodi.FirstOrDefault().Id;
             TekuciRacunPonudjaca.Banka.Id = Banke.FirstOrDefault().Id;

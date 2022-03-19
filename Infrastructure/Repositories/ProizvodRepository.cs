@@ -1,7 +1,6 @@
 ﻿using Core.Abrstractions;
 using Core.Domain.ProizvodAggregate;
 using Core.Domain.ProizvodAggregate.Repositories;
-using Core.ListView;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories
@@ -22,11 +21,9 @@ namespace Infrastructure.Repositories
             return _context.Proizvod.FirstOrDefaultAsync(p => p.Id == id);
         }
 
-        public Task<ListView<Proizvod>> VratiProizvode(PaginationParameters parameters)
+        public async Task<IEnumerable<Proizvod>> VratiProizvode()
         {
-            var query = _context.Set<Proizvod>();
-
-            return Task.FromResult(ListView<Proizvod>.ToPagedList(query, parameters.PageNumber, parameters.PageSize));
+            return await _context.Proizvod.ToListAsync();
         }
     }
 }

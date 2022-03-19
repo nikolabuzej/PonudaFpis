@@ -15,7 +15,7 @@ namespace InfrastructureFE
             _httpClient = httpClient;
         }
 
-        public async Task<Ponuda> AzurirajPonudu(Guid id,PonudaPayload payload)
+        public async Task<Ponuda> AzurirajPonudu(Guid id, PonudaPayload payload)
         {
             var response = (await _httpClient.PutAsJsonAsync($"{UrlStrings.PonudaUrl}/{id}", payload)).EnsureSuccessStatusCode();
 
@@ -29,13 +29,18 @@ namespace InfrastructureFE
             return (await HttpUtilities.Deserialize<Ponuda>(response));
         }
 
-        public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1, int pageSize = 1)
+        public async Task<ListViewModel<Ponuda>> VratiPonude(int pageNumber = 1,
+                                                             int pageSize = 2,
+                                                             SortProperty sortProperty = SortProperty.DatumPristizanja,
+                                                             SortOrder sortOrder = SortOrder.desc)
         {
             var parameters = new Dictionary<string, string>();
             parameters.Add(nameof(pageNumber), pageNumber.ToString());
             parameters.Add(nameof(pageSize), pageSize.ToString());
+            parameters.Add(nameof(sortProperty), sortProperty.ToString());
+            parameters.Add(nameof(sortOrder), sortOrder.ToString());
 
-            HttpResponseMessage response = await _httpClient.GetAsync(HttpUtilities.AppendQueryString(UrlStrings.PonudaUrl,parameters));
+            HttpResponseMessage response = await _httpClient.GetAsync(HttpUtilities.AppendQueryString(UrlStrings.PonudaUrl, parameters));
 
             ListViewModel<Ponuda> result = await HttpUtilities.Deserialize<ListViewModel<Ponuda>>(response);
 
