@@ -48,7 +48,7 @@ namespace DataMigrations.Migrations
                 .WithColumn("ZakonskiZastupnik").AsString().NotNullable()
                 .WithColumn("Kontakt_Ime").AsString().NotNullable()
                 .WithColumn("Kontakt_Prezime").AsString().NotNullable()
-                .WithColumn("Kontakt_Jmbg").AsFixedLengthString(13).Unique().NotNullable()
+                .WithColumn("Kontakt_Jmbg").AsFixedLengthString(13).NotNullable()
                 .WithColumn("Kontakt_Email").AsString()
                 .WithColumn("Kontakt_Telefon").AsString()
                 .WithColumn("PonudjacId").AsGuid().NotNullable()
